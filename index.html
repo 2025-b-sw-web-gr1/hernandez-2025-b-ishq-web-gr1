@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conceptos Básicos de HTML - Página Educativa</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f9f9f9; }
+        header { background: #0074D9; color: white; padding: 1rem; text-align: center; }
+        main { max-width: 900px; margin: 2rem auto; background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        h2 { color: #0074D9; }
+        pre { background: #f4f4f4; padding: 1rem; border-radius: 4px; overflow-x: auto; }
+        code { color: #d6336c; }
+        section { margin-bottom: 2rem; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Conceptos Básicos de HTML</h1>
+        <p>Página educativa con ejemplos y explicaciones</p>
+    </header>
+    <main>
+        <section>
+            <h2>¿Qué es HTML?</h2>
+            <p>HTML (HyperText Markup Language) es el lenguaje estándar para crear páginas web. Utiliza etiquetas para estructurar el contenido.</p>
+        </section>
+        <section>
+            <h2>Estructura básica de una página HTML</h2>
+            <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;Título de la página&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;Encabezado principal&lt;/h1&gt;
+    &lt;p&gt;Este es un párrafo.&lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+            <p>La estructura básica incluye las etiquetas <code>&lt;html&gt;</code>, <code>&lt;head&gt;</code>, <code>&lt;title&gt;</code> y <code>&lt;body&gt;</code>.</p>
+        </section>
+        <section>
+            <h2>Encabezados</h2>
+            <p>HTML tiene seis niveles de encabezados, de <code>&lt;h1&gt;</code> a <code>&lt;h6&gt;</code>:</p>
+            <pre><code>&lt;h1&gt;Encabezado 1&lt;/h1&gt;
+&lt;h2&gt;Encabezado 2&lt;/h2&gt;
+&lt;h3&gt;Encabezado 3&lt;/h3&gt;</code></pre>
+        </section>
+        <section>
+            <h2>Párrafos</h2>
+            <p>Los párrafos se definen con la etiqueta <code>&lt;p&gt;</code>:</p>
+            <pre><code>&lt;p&gt;Este es un párrafo.&lt;/p&gt;</code></pre>
+        </section>
+        <section>
+            <h2>Enlaces</h2>
+            <p>Los enlaces se crean con la etiqueta <code>&lt;a&gt;</code>:</p>
+            <pre><code>&lt;a href="https://www.w3schools.com"&gt;Visita W3Schools&lt;/a&gt;</code></pre>
+        </section>
+        <section>
+            <h2>Imágenes</h2>
+            <p>Las imágenes se insertan con la etiqueta <code>&lt;img&gt;</code>:</p>
+            <pre><code>&lt;img src="https://www.w3schools.com/images/w3schools_green.jpg" alt="W3Schools"&gt;</code></pre>
+        </section>
+        <section>
+            <h2>¡Prueba tú mismo!</h2>
+            <p>Puedes modificar estos ejemplos y ver cómo cambian en tu navegador.</p>
+        </section>
+        <section>
+            <h2>Elementos HTML</h2>
+            <p>Un <strong>elemento HTML</strong> está formado por una etiqueta de apertura, contenido y una etiqueta de cierre. Por ejemplo:</p>
+            <pre><code>&lt;p&gt;Este es un párrafo&lt;/p&gt;</code></pre>
+            <p>Algunos elementos no tienen etiqueta de cierre, como <code>&lt;br&gt;</code> para saltos de línea:</p>
+            <pre><code>&lt;p&gt;Línea 1&lt;br&gt;Línea 2&lt;/p&gt;</code></pre>
+            <h3>Ejemplo de varios elementos HTML:</h3>
+            <pre><code>&lt;h1&gt;Mi primer encabezado&lt;/h1&gt;
+&lt;p&gt;Mi primer párrafo.&lt;/p&gt;
+&lt;a href="https://www.w3schools.com"&gt;Este es un enlace&lt;/a&gt;</code></pre>
+            <h3>Ejemplo: Encabezados HTML</h3>
+            <p>Los encabezados se usan para definir títulos y subtítulos. Hay seis niveles, del más importante (<code>&lt;h1&gt;</code>) al menos importante (<code>&lt;h6&gt;</code>):</p>
+            <pre><code>&lt;h1&gt;Encabezado 1&lt;/h1&gt;
+&lt;h2&gt;Encabezado 2&lt;/h2&gt;
+&lt;h3&gt;Encabezado 3&lt;/h3&gt;
+&lt;h4&gt;Encabezado 4&lt;/h4&gt;
+&lt;h5&gt;Encabezado 5&lt;/h5&gt;
+&lt;h6&gt;Encabezado 6&lt;/h6&gt;</code></pre>
+            <p>Visualmente, <code>&lt;h1&gt;</code> es el más grande y <code>&lt;h6&gt;</code> el más pequeño. Se recomienda usar solo un <code>&lt;h1&gt;</code> por página para el título principal.</p>
+            <p><strong>Ejemplo en la práctica:</strong></p>
+            <div style="background:#f4f4f4; padding:1rem; border-radius:4px;">
+                <h1>Encabezado 1</h1>
+                <h2>Encabezado 2</h2>
+                <h3>Encabezado 3</h3>
+                <h4>Encabezado 4</h4>
+                <h5>Encabezado 5</h5>
+                <h6>Encabezado 6</h6>
+            </div>
+            <p>Observa cómo cambia el tamaño y el énfasis de cada encabezado.</p>
+            <p>Los encabezados ayudan a organizar el contenido y mejorar la accesibilidad y el SEO de la página.</p>
+            <p>Los elementos HTML pueden estar anidados, es decir, un elemento dentro de otro:</p>
+            <pre><code>&lt;div&gt;
+  &lt;p&gt;Texto dentro de un div.&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+            <p>Recuerda que la mayoría de los elementos tienen una etiqueta de apertura y una de cierre, pero algunos son "vacíos" y solo tienen la de apertura.</p>
+        </section>
+    </main>
+</body>
+</html>
