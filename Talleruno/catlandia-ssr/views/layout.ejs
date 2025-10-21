@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title><%= title %> | CatLandia</title>
+  <style>
+    /* 🌸 Tema rosita aesthetic */
+    :root {
+      --bg: #fff6fb;
+      --primary: #ffb6c1;
+      --secondary: #ffcce0;
+      --text: #444;
+      --accent: #f48fb1;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: "Poppins", sans-serif;
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    header {
+      background: var(--primary);
+      color: white;
+      padding: 1rem 0;
+      text-align: center;
+      font-size: 1.5rem;
+      letter-spacing: 1px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    nav {
+      background: var(--secondary);
+      text-align: center;
+      padding: 0.5rem 0.3rem;
+      border-bottom: 2px solid var(--accent);
+    }
+    nav a {
+      text-decoration: none;
+      color: #fff;
+      background: var(--accent);
+      padding: 0.5rem 1rem;
+      border-radius: 999px;
+      margin: 0 0.3rem;
+      transition: all 0.2s ease;
+      display: inline-block;
+    }
+    nav a:hover {
+      background: #fff;
+      color: var(--accent);
+      transform: scale(1.05);
+    }
+
+    main {
+      max-width: 800px;
+      margin: 2rem auto;
+      background: white;
+      padding: 2rem;
+      border-radius: 1.5rem;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    footer {
+      text-align: center;
+      color: #aaa;
+      margin: 2rem 0;
+      font-size: 0.9rem;
+    }
+
+    img {
+      max-width: 100%;
+      border-radius: 1rem;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+    }
+    img:hover {
+      transform: scale(1.03);
+    }
+  </style>
+</head>
+<body>
+  <header>🐾 CatLandia 💖</header>
+
+  <nav>
+    <a href="/">Inicio</a>
+    <a href="/mascota?nombre=Obami">Obami</a>
+    <a href="/mascota?nombre=Mayka">Mayka</a>
+    <a href="/mascota?nombre=Leah">Leah</a>
+  </nav>
+
+  <main>
+    <%- include(view) %>
+  </main>
+
+  <footer>
+    Hecho con 💕 en SSR (Server-Side Rendering)
+  </footer>
+</body>
+</html>

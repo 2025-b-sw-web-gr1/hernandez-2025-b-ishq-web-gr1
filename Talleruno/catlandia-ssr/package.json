@@ -1,0 +1,13 @@
+{
+  "name": "catlandia-ssr",
+  "version": "1.1.0",
+  "description": "CatLandia SSR: versión rosita y aesthetic 💖",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.1",
+    "ejs": "^3.1.10"
+  }
+}
