@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spotify - Web Player</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'spotify-green': '#1db954',
+                        'spotify-black': '#000000',
+                        'dark-gray': '#121212',
+                        'medium-gray': '#181818',
+                        'light-gray': '#282828',
+                        'hover-gray': '#2a2a2a',
+                        'text-gray': '#b3b3b3',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Circular', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+
+</head>
+<body class="bg-spotify-black text-white h-screen overflow-hidden">
+    <div class="flex flex-col h-screen">
+        <!-- Header -->
+        <header class="flex items-center justify-between px-4 py-2 bg-black/50 backdrop-blur-sm sticky top-0 z-50">
+            <!-- Left: Navigation -->
+            <div class="flex items-center gap-2">
+                <button class="w-8 h-8 flex items-center justify-center rounded-full bg-black/70 hover:bg-black/90 transition">
+                    <i class="fa-solid fa-ellipsis text-white"></i>
+                </button>
+                <button class="w-9 h-9 flex items-center justify-center rounded-full bg-black/70 hover:bg-black/90 hover:scale-105 transition">
+                    <i class="fa-solid fa-chevron-left text-white"></i>
+                </button>
+                <button class="w-9 h-9 flex items-center justify-center rounded-full bg-black/70 hover:bg-black/90 hover:scale-105 transition opacity-50">
+                    <i class="fa-solid fa-chevron-right text-white"></i>
+                </button>
+            </div>
+
+            <!-- Busqueda del header -->
+            <div class="flex items-center gap-2 flex-1 max-w-2xl mx-4">
+                <button class="w-12 h-12 flex items-center justify-center rounded-full bg-dark-gray hover:bg-light-gray transition">
+                    <i class="fa-solid fa-house text-white text-xl"></i>
+                </button>
+                <div class="flex items-center flex-1 bg-light-gray hover:bg-hover-gray rounded-full px-4 py-3 transition group">
+                    <i class="fa-solid fa-magnifying-glass text-text-gray text-lg mr-3"></i>
+                    <input type="text" placeholder="¿Qué quieres reproducir?" 
+                           class="bg-transparent border-none outline-none text-white text-sm w-full placeholder-text-gray">
+                    <button class="w-8 h-8 flex items-center justify-center hover:text-white text-text-gray transition">
+                        <i class="fa-solid fa-archive"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Right: User Menu -->
+            <div class="flex items-center gap-2">
+                <button class="w-9 h-9 flex items-center justify-center rounded-full hover:bg-light-gray transition">
+                    <i class="fa-solid fa-bell text-text-gray text-lg"></i>
+                </button>
+                <button class="w-9 h-9 flex items-center justify-center rounded-full hover:bg-light-gray transition">
+                    <i class="fa-solid fa-user-group text-text-gray text-lg"></i>
+                </button>
+                <a href="cuenta.html" class="w-9 h-9 flex items-center justify-center rounded-full bg-light-gray hover:bg-hover-gray transition">
+                    <img src="images/foto-perfil.jpg" alt="User" class="w-full h-full rounded-full">
+                </a>
+                <button class="w-9 h-9 flex items-center justify-center hover:scale-105 transition">
+                    <i class="fa-solid fa-minus text-text-gray"></i>
+                </button>
+                <button class="w-9 h-9 flex items-center justify-center hover:scale-105 transition">
+                    <i class="fa-regular fa-square text-text-gray text-sm"></i>
+                </button>
+                <button class="w-9 h-9 flex items-center justify-center hover:scale-105 transition">
+                    <i class="fa-solid fa-xmark text-text-gray"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Content Area -->
+        <div class="flex flex-1 overflow-hidden">
+            <!-- Sidebar -->
+            <aside class="w-72 bg-spotify-black flex flex-col p-2 gap-2">
+                <!-- Library Section -->
+                <div class="bg-medium-gray rounded-lg p-4 flex-1 overflow-hidden flex flex-col">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center gap-3">
+                            <i class="fa-solid fa-book text-text-gray text-xl"></i>
+                            <span class="font-semibold">Tu biblioteca</span>
+                        </div>
+                        <div class="flex gap-3">
+                            <button class="text-text-gray hover:text-white transition">
+                                <i class="fa-solid fa-plus"></i>
+                            </button>
+                            <button class="text-text-gray hover:text-white transition">
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Tabs -->
+                    <div class="flex gap-2 mb-4">
+                        <button class="px-3 py-1 rounded-full bg-light-gray text-sm hover:bg-hover-gray transition">
+                            Playlists
+                        </button>
+                        <button class="px-3 py-1 rounded-full text-sm text-text-gray hover:bg-light-gray transition">
+                            Podcasts
+                        </button>
+                        <button class="px-3 py-1 rounded-full text-sm text-text-gray hover:bg-light-gray transition">
+                            Álbumes
+                        </button>
+                    </div>
+
+                    <!-- Search and Filter -->
+                    <div class="flex items-center justify-between mb-4">
+                        <button class="text-text-gray hover:text-white transition">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                        <button class="text-text-gray hover:text-white transition flex items-center gap-2 text-sm">
+                            Recientes
+                            <i class="fa-solid fa-bars text-xs"></i>
+                        </button>
+                    </div>
+
+                    <!-- Playlist Items -->
+                    <div class="flex-1 overflow-y-auto scrollbar-hide">
+                        <div class="space-y-2">
+                            <!-- Playlist Item 1 -->
+                            <a href="tus-me-gusta.html" class="flex items-center gap-3 p-2 rounded hover:bg-light-gray cursor-pointer group">
+                                <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-700 rounded flex items-center justify-center flex-shrink-0">
+                                    <i class="fa-solid fa-heart text-white"></i>
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <div class="font-semibold text-sm truncate">Tus me gusta</div>
+                                    <div class="text-xs text-text-gray flex items-center gap-1">
+                                        <i class="fa-solid fa-thumbtack text-spotify-green text-xs"></i>
+                                        <span>Playlist</span>
+                                        <span>•</span>
+                                        <span>736 canciones</span>
+                                    </div>
+                                </div>
+                            </a>
+
+                            <!-- Playlist Item 2 -->
+                            <div class="flex items-center gap-3 p-2 rounded hover:bg-light-gray cursor-pointer group">
+                                <div class="w-12 h-12 bg-gradient-to-br from-green-700 to-green-900 rounded flex items-center justify-center flex-shrink-0">
+                                    <i class="fa-solid fa-bookmark text-white"></i>
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <div class="font-semibold text-sm truncate">Tus episodios</div>
+                                    <div class="text-xs text-text-gray flex items-center gap-1">
+                                        <i class="fa-solid fa-thumbtack text-spotify-green text-xs"></i>
+                                        <span>Playlist</span>
+                                        <span>•</span>
+                                        <span>Episodios guardados</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Artist -->
+                            <div class="flex items-center gap-3 p-2 rounded hover:bg-light-gray cursor-pointer group">
+                                <img src="images/liam-payne.jpg" alt="Artist" class="w-12 h-12 rounded-full flex-shrink-0">
+                                <div class="flex-1 min-w-0">
+                                    <div class="font-semibold text-sm truncate">Liam Payne</div>
+                                    <div class="text-xs text-text-gray">Artista</div>
+                                </div>
+                            </div>
+
+                            <!-- Album -->
+                            <div class="flex items-center gap-3 p-2 rounded hover:bg-light-gray cursor-pointer group">
+                                <img src="images/hamilton.jpg" alt="Album" class="w-12 h-12 rounded flex-shrink-0">
+                                <div class="flex-1 min-w-0">
+                                    <div class="font-semibold text-sm truncate">Hamilton (Original Broadway Cast Recording)</div>
+                                    <div class="text-xs text-text-gray">Álbum • Lin-Manuel Miranda</div>
+                                </div>
+                            </div>
+
+                            <!-- More items -->
+                            <div class="flex items-center gap-3 p-2 rounded hover:bg-light-gray cursor-pointer group">
+                                <img src="images/locket.jpg" alt="Album" class="w-12 h-12 rounded flex-shrink-0">
+                                <div class="flex-1 min-w-0">
+                                    <div class="font-semibold text-sm truncate">locket</div>
+                                    <div class="text-xs text-text-gray">Próximo álbum • Madison</div>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center gap-3 p-2 rounded hover:bg-light-gray cursor-pointer group">
+                                <img src="images/pitw.jpg" alt="Album" class="w-12 h-12 rounded flex-shrink-0">
+                                <div class="flex-1 min-w-0">
+                                    <div class="font-semibold text-sm truncate">Piss In The Wind</div>
+                                    <div class="text-xs text-text-gray">Próximo álbum • Joji</div>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center gap-3 p-2 rounded hover:bg-light-gray cursor-pointer group">
+                                <img src="images/mans-best-friend.jpg" alt="Album" class="w-12 h-12 rounded flex-shrink-0">
+                                <div class="flex-1 min-w-0">
+                                    <div class="font-semibold text-sm truncate">Man's Best Friend</div>
+                                    <div class="text-xs text-text-gray">Álbum</div>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center gap-3 p-2 rounded hover:bg-light-gray cursor-pointer group">
+                                <img src="images/polaroid.jpg" alt="Album" class="w-12 h-12 rounded flex-shrink-0">
+                                <div class="flex-1 min-w-0">
+                                    <div class="font-semibold text-sm truncate">Polaroid</div>
+                                    <div class="text-xs text-text-gray">Video musical • Jonas Blue, Liam Payne, Lennon</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="flex-1 overflow-y-auto scrollbar-hide bg-gradient-to-b from-indigo-900 via-dark-gray to-dark-gray">
+                <!-- Featured Playlist Banner -->
+                <div class="relative h-80 p-6">
+                    <div class="absolute top-6 right-6 z-10">
+                        <button class="px-4 py-1.5 rounded-full bg-black/40 hover:bg-black/60 text-sm font-semibold transition backdrop-blur-sm">
+                            Ocultar anuncios
+                        </button>
+                    </div>
+                    
+                    <div class="flex items-end h-full gap-6">
+                        <img src="https://picsum.photos/seed/featured/300" alt="Featured Playlist" 
+                             class="w-56 h-56 rounded-lg shadow-2xl">
+                        <div class="flex-1 pb-4">
+                            <p class="text-sm font-semibold mb-2">Playlist</p>
+                            <h1 class="text-7xl font-black mb-6">Top Ecuador 2025</h1>
+                            <p class="text-sm mb-4 text-text-gray">Escucha los éxitos más importantes de Ecuador.</p>
+                            <div class="flex items-center gap-4">
+                                <button class="bg-spotify-green hover:bg-green-400 text-dark-gray font-bold py-3 px-8 rounded-full transition transform hover:scale-105">
+                                    Reproducir
+                                </button>
+                                <button class="border border-text-gray hover:border-white text-white font-semibold py-3 px-6 rounded-full transition hover:scale-105">
+                                    Seguir
+                                </button>
+                                <button class="text-text-gray hover:text-white transition">
+                                    <i class="fa-solid fa-ellipsis text-2xl"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Filter Tabs -->
+                <div class="px-6 py-4 flex gap-2 sticky top-0 bg-dark-gray/95 backdrop-blur-sm z-10">
+                    <button class="px-4 py-2 rounded-full bg-white text-dark-gray text-sm font-semibold">
+                        Todo
+                    </button>
+                    <button class="px-4 py-2 rounded-full bg-light-gray hover:bg-hover-gray text-sm font-semibold transition">
+                        Música
+                    </button>
+                    <button class="px-4 py-2 rounded-full bg-light-gray hover:bg-hover-gray text-sm font-semibold transition">
+                        Podcasts
+                    </button>
+                </div>
+
+                <!-- Content Grid -->
+                <div class="px-6 pb-24">
+                    <!-- Recent Playlists -->
+                    <div class="grid grid-cols-3 gap-4 mb-8">
+                        <a href="tus-me-gusta.html" class="flex items-center gap-4 bg-white/10 hover:bg-white/20 rounded overflow-hidden cursor-pointer group transition">
+                            <div class="w-20 h-20 bg-gradient-to-br from-purple-500 to-purple-700 flex items-center justify-center flex-shrink-0">
+                                <i class="fa-solid fa-heart text-white text-2xl"></i>
+                            </div>
+                            <span class="font-semibold">Tus me gusta</span>
+                        </a>
+
+                        <div class="flex items-center gap-4 bg-white/10 hover:bg-white/20 rounded overflow-hidden cursor-pointer group transition">
+                            <img src="images/tloasg.jpg" alt="Playlist" class="w-20 h-20 flex-shrink-0">
+                            <span class="font-semibold">The Life of a Showgirl</span>
+                        </div>
+
+                        <div class="flex items-center gap-4 bg-white/10 hover:bg-white/20 rounded overflow-hidden cursor-pointer group transition">
+                            <img src="images/liam-payne.jpg" alt="Playlist" class="w-20 h-20 flex-shrink-0">
+                            <span class="font-semibold">Liam Payne</span>
+                        </div>
+
+                        <div class="flex items-center gap-4 bg-white/10 hover:bg-white/20 rounded overflow-hidden cursor-pointer group transition">
+                            <img src="images/calm.jpg" alt="Playlist" class="w-20 h-20 flex-shrink-0">
+                            <span class="font-semibold">calm songs to relax my anxiety</span>
+                        </div>
+
+                        <div class="flex items-center gap-4 bg-white/10 hover:bg-white/20 rounded overflow-hidden cursor-pointer group transition">
+                            <img src="images/hamilton.jpg" alt="Playlist" class="w-20 h-20 flex-shrink-0">
+                            <span class="font-semibold">Hamilton (Original Broadway Cast Recording)</span>
+                        </div>
+
+                        <div class="flex items-center gap-4 bg-white/10 hover:bg-white/20 rounded overflow-hidden cursor-pointer group transition">
+                            <img src="images/the-fate-of-ophelia.jpg" alt="Playlist" class="w-20 h-20 flex-shrink-0">
+                            <span class="font-semibold">The Fate of Ophelia</span>
+                        </div>
+                    </div>
+
+                    <!-- Section: Creado para -->
+                    <div class="mb-8">
+                        <div class="flex items-center justify-between mb-4">
+                            <h2 class="text-2xl font-bold">Creado para donut</h2>
+                            <button class="text-sm font-bold text-text-gray hover:text-white transition">
+                                Mostrar todo
+                            </button>
+                        </div>
+
+                        <div class="grid grid-cols-6 gap-4">
+                            <!-- Card 1 -->
+                            <div class="bg-medium-gray hover:bg-light-gray p-4 rounded-lg cursor-pointer transition group">
+                                <div class="relative mb-4">
+                                    <img src="images/dailymix1.jpg" alt="Daily Mix 1" class="w-full aspect-square rounded-md object-cover">
+                                    <button class="absolute bottom-2 right-2 w-12 h-12 bg-spotify-green rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition shadow-lg">
+                                        <i class="fa-solid fa-play text-dark-gray ml-0.5"></i>
+                                    </button>
+                                </div>
+                                <h3 class="font-semibold text-sm mb-2 truncate">Daily Mix 1</h3>
+                                <p class="text-xs text-text-gray line-clamp-2">Mix personalizado</p>
+                            </div>
+
+                            <!-- Card 2 -->
+                            <div class="bg-medium-gray hover:bg-light-gray p-4 rounded-lg cursor-pointer transition group">
+                                <div class="relative mb-4">
+                                    <img src="images/dailymix2.jpg" alt="Daily Mix 2" class="w-full aspect-square rounded-md object-cover">
+                                    <button class="absolute bottom-2 right-2 w-12 h-12 bg-spotify-green rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition shadow-lg">
+                                        <i class="fa-solid fa-play text-dark-gray ml-0.5"></i>
+                                    </button>
+                                </div>
+                                <h3 class="font-semibold text-sm mb-2 truncate">Daily Mix 2</h3>
+                                <p class="text-xs text-text-gray line-clamp-2">Mix personalizado</p>
+                            </div>
+
+                            <!-- Card 3 -->
+                            <div class="bg-medium-gray hover:bg-light-gray p-4 rounded-lg cursor-pointer transition group">
+                                <div class="relative mb-4">
+                                    <img src="images/dailymix3.jpg" alt="Daily Mix 3" class="w-full aspect-square rounded-md object-cover">
+                                    <button class="absolute bottom-2 right-2 w-12 h-12 bg-spotify-green rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition shadow-lg">
+                                        <i class="fa-solid fa-play text-dark-gray ml-0.5"></i>
+                                    </button>
+                                </div>
+                                <h3 class="font-semibold text-sm mb-2 truncate">Daily Mix 3</h3>
+                                <p class="text-xs text-text-gray line-clamp-2">Mix personalizado</p>
+                            </div>
+
+                            <!-- Card 4 -->
+                            <div class="bg-medium-gray hover:bg-light-gray p-4 rounded-lg cursor-pointer transition group">
+                                <div class="relative mb-4">
+                                    <img src="images/discover.jpg" alt="Discover Weekly" class="w-full aspect-square rounded-md object-cover">
+                                    <button class="absolute bottom-2 right-2 w-12 h-12 bg-spotify-green rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition shadow-lg">
+                                        <i class="fa-solid fa-play text-dark-gray ml-0.5"></i>
+                                    </button>
+                                </div>
+                                <h3 class="font-semibold text-sm mb-2 truncate">Discover Weekly</h3>
+                                <p class="text-xs text-text-gray line-clamp-2">Tu playlist semanal</p>
+                            </div>
+
+                            <!-- Card 5 -->
+                            <div class="bg-medium-gray hover:bg-light-gray p-4 rounded-lg cursor-pointer transition group">
+                                <div class="relative mb-4">
+                                    <img src="images/release-radar.jpg" alt="Release Radar" class="w-full aspect-square rounded-md object-cover">
+                                    <button class="absolute bottom-2 right-2 w-12 h-12 bg-spotify-green rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition shadow-lg">
+                                        <i class="fa-solid fa-play text-dark-gray ml-0.5"></i>
+                                    </button>
+                                </div>
+                                <h3 class="font-semibold text-sm mb-2 truncate">Release Radar</h3>
+                                <p class="text-xs text-text-gray line-clamp-2">Nuevos lanzamientos</p>
+                            </div>
+
+                            <!-- Card 6 -->
+                            <div class="bg-medium-gray hover:bg-light-gray p-4 rounded-lg cursor-pointer transition group">
+                                <div class="relative mb-4">
+                                    <img src="images/lux.jpg" alt="LUX" class="w-full aspect-square rounded-md object-cover">
+                                    <button class="absolute bottom-2 right-2 w-12 h-12 bg-spotify-green rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition shadow-lg">
+                                        <i class="fa-solid fa-play text-dark-gray ml-0.5"></i>
+                                    </button>
+                                </div>
+                                <h3 class="font-semibold text-sm mb-2 truncate">LUX</h3>
+                                <p class="text-xs text-text-gray line-clamp-2">Playlist personalizada</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <!-- Player -->
+        <footer class="bg-medium-gray border-t border-spotify-black px-4 py-3">
+            <div class="flex items-center justify-between gap-4">
+                <!-- Left: Current Song -->
+                <div class="flex items-center gap-3 w-80">
+                    <img src="images/polaroid.jpg" alt="Current Song" class="w-14 h-14 rounded">
+                    <div class="flex-1 min-w-0">
+                        <h4 class="font-semibold text-sm truncate hover:underline cursor-pointer">Polaroid</h4>
+                        <p class="text-xs text-text-gray truncate hover:underline hover:text-white cursor-pointer">
+                            Video musical • Jonas Blue, Liam Payne, Lennon
+                        </p>
+                    </div>
+                    <button class="text-text-gray hover:text-white transition">
+                        <i class="fa-regular fa-heart"></i>
+                    </button>
+                </div>
+
+                <!-- Center: Player Controls -->
+                <div class="flex-1 max-w-2xl">
+                    <div class="flex items-center justify-center gap-4 mb-2">
+                        <button class="text-text-gray hover:text-white transition">
+                            <i class="fa-solid fa-shuffle text-sm"></i>
+                        </button>
+                        <button class="text-text-gray hover:text-white transition">
+                            <i class="fa-solid fa-backward-step"></i>
+                        </button>
+                        <button class="w-8 h-8 bg-white hover:scale-105 rounded-full flex items-center justify-center transition">
+                            <i class="fa-solid fa-play text-dark-gray text-sm ml-0.5"></i>
+                        </button>
+                        <button class="text-text-gray hover:text-white transition">
+                            <i class="fa-solid fa-forward-step"></i>
+                        </button>
+                        <button class="text-text-gray hover:text-white transition">
+                            <i class="fa-solid fa-repeat text-sm"></i>
+                        </button>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs text-text-gray w-10 text-right">0:03</span>
+                        <div class="flex-1 h-1 bg-light-gray rounded-full group cursor-pointer">
+                            <div class="h-full bg-white rounded-full w-1/12 group-hover:bg-spotify-green relative">
+                                <div class="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 bg-white rounded-full opacity-0 group-hover:opacity-100"></div>
+                            </div>
+                        </div>
+                        <span class="text-xs text-text-gray w-10">3:13</span>
+                    </div>
+                </div>
+
+                <!-- Right: Volume & More -->
+                <div class="flex items-center gap-2 w-80 justify-end">
+                    <button class="text-text-gray hover:text-white transition">
+                        <i class="fa-solid fa-list-ul text-sm"></i>
+                    </button>
+                    <button class="text-text-gray hover:text-white transition">
+                        <i class="fa-solid fa-microphone text-sm"></i>
+                    </button>
+                    <button class="text-text-gray hover:text-white transition">
+                        <i class="fa-solid fa-bars text-sm"></i>
+                    </button>
+                    <button class="text-text-gray hover:text-white transition">
+                        <i class="fa-solid fa-desktop text-sm"></i>
+                    </button>
+                    <button class="text-text-gray hover:text-white transition">
+                        <i class="fa-solid fa-volume-high text-sm"></i>
+                    </button>
+                    <div class="w-24 h-1 bg-light-gray rounded-full group cursor-pointer">
+                        <div class="h-full bg-white rounded-full w-8/12 group-hover:bg-spotify-green relative">
+                            <div class="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 bg-white rounded-full opacity-0 group-hover:opacity-100"></div>
+                        </div>
+                    </div>
+                    <button class="text-text-gray hover:text-white transition">
+                        <i class="fa-solid fa-up-right-and-down-left-from-center text-xs"></i>
+                    </button>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Dynamic greeting based on time
+        // Play/pause functionality
+        // Add interactivity as needed
+    </script>
+</body>
+</html>

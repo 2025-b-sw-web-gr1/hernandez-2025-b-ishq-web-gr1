@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuenta - Spotify</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'spotify-green': '#1db954',
+                        'spotify-black': '#000000',
+                        'dark-gray': '#121212',
+                        'medium-gray': '#181818',
+                        'light-gray': '#282828',
+                        'hover-gray': '#2a2a2a',
+                        'text-gray': '#b3b3b3',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Circular', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+    </style>
+
+
+</head>
+<body class="bg-dark-gray text-white">
+    <!-- Header: da a home-->
+    <div class="fixed top-4 left-4 z-50">
+        <a href="home.html" class="w-10 h-10 rounded-full bg-black/70 hover:bg-black/90 flex items-center justify-center transition backdrop-blur-sm">
+            <i class="fa-solid fa-chevron-left text-white"></i>
+        </a>
+    </div>
+
+    <!-- Main Content -->
+    <main class="bg-dark-gray min-h-screen">
+        <!-- Foto de perfil e informacion -->
+        <section class="bg-gradient-to-b from-gray-800 to-dark-gray px-6 pt-20 pb-8">
+            <div class="max-w-7xl mx-auto">
+                <div class="flex items-end gap-6">
+                    <div class="relative">
+                        <img src="images/foto-perfil.jpg" alt="Foto de perfil" class="w-56 h-56 rounded-full shadow-2xl">
+                        <button class="absolute bottom-2 right-2 w-12 h-12 bg-black/80 hover:bg-black rounded-full flex items-center justify-center transition">
+                            <i class="fa-solid fa-camera text-white"></i>
+                        </button>
+                    </div>
+                    <div class="pb-4">
+                        <p class="text-sm font-semibold mb-2">Perfil</p>
+                        <h1 class="text-8xl font-black mb-6 leading-none">donut</h1>
+                        <p class="text-sm">11 playlists públicas • 29 siguiendo</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Menu Button -->
+        <div class="px-6 py-6 max-w-7xl mx-auto">
+            <button class="text-text-gray hover:text-white transition">
+                <i class="fa-solid fa-ellipsis text-3xl"></i>
+            </button>
+        </div>
+
+        <!-- Content Sections -->
+        <section class="px-6 max-w-7xl mx-auto space-y-12 pb-24">
+            <!-- Top Artists This Month -->
+            <div>
+                <div class="flex justify-between items-center mb-6">
+                    <div>
+                        <h2 class="text-3xl font-bold">Artistas principales este mes</h2>
+                        <p class="text-sm text-text-gray">Solo visibles para ti</p>
+                    </div>
+                    <button class="text-text-gray hover:text-white transition font-semibold text-sm hover:underline">
+                        Mostrar todo
+                    </button>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-6 gap-6" data-artists-container>
+                    <a href="#" class="group">
+                        <div class="text-center">
+                            <img src="images/tloasg.jpg" alt="Taylor Swift" class="w-full aspect-square rounded-full mb-4 shadow-lg group-hover:shadow-2xl transition">
+                            <p class="font-semibold hover:underline">Taylor Swift</p>
+                            <p class="text-xs text-text-gray">Artista</p>
+                        </div>
+                    </a>
+                    <a href="#" class="group">
+                        <div class="text-center">
+                            <img src="images/olivia-rodrigo.jpg" alt="Olivia Rodrigo" class="w-full aspect-square rounded-full mb-4 shadow-lg group-hover:shadow-2xl transition">
+                            <p class="font-semibold hover:underline">Olivia Rodrigo</p>
+                            <p class="text-xs text-text-gray">Artista</p>
+                        </div>
+                    </a>
+                    <a href="#" class="group">
+                        <div class="text-center">
+                            <img src="images/locket.jpg" alt="Madison Beer" class="w-full aspect-square rounded-full mb-4 shadow-lg group-hover:shadow-2xl transition">
+                            <p class="font-semibold hover:underline">Madison Beer</p>
+                            <p class="text-xs text-text-gray">Artista</p>
+                        </div>
+                    </a>
+                    <a href="#" class="group">
+                        <div class="text-center">
+                            <img src="images/ariana.jpg" alt="Ariana Grande" class="w-full aspect-square rounded-full mb-4 shadow-lg group-hover:shadow-2xl transition">
+                            <p class="font-semibold hover:underline">Ariana Grande</p>
+                            <p class="text-xs text-text-gray">Artista</p>
+                        </div>
+                    </a>
+                    <a href="#" class="group">
+                        <div class="text-center">
+                            <img src="images/leslie.jpg" alt="Leslie Odom Jr." class="w-full aspect-square rounded-full mb-4 shadow-lg group-hover:shadow-2xl transition">
+                            <p class="font-semibold hover:underline">Leslie Odom Jr.</p>
+                            <p class="text-xs text-text-gray">Artista</p>
+                        </div>
+                    </a>
+                    <a href="#" class="group">
+                        <div class="text-center">
+                            <img src="images/lin.jpg" alt="Lin-Manuel Miranda." class="w-full aspect-square rounded-full mb-4 shadow-lg group-hover:shadow-2xl transition">
+                            <p class="font-semibold hover:underline">Lin-Manuel Miranda.</p>
+                            <p class="text-xs text-text-gray">Artista</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Top Songs This Month -->
+            <div>
+                <div class="flex justify-between items-center mb-6">
+                    <div>
+                        <h2 class="text-3xl font-bold">Canciones principales este mes</h2>
+                        <p class="text-sm text-text-gray">Solo visibles para ti</p>
+                    </div>
+                    <button class="text-text-gray hover:text-white transition font-semibold text-sm hover:underline">
+                        Mostrar todo
+                    </button>
+                </div>
+                <div class="space-y-3">
+                    <!-- Song 1 -->
+                    <div class="flex items-center justify-between p-3 rounded hover:bg-white/5 group transition cursor-pointer">
+                        <div class="flex items-center gap-4 flex-1">
+                            <span class="text-text-gray w-6 text-center">1</span>
+                            <img src="images/tloasg.jpg" alt="Father Figure" class="w-12 h-12 rounded">
+                            <div class="flex-1">
+                                <div class="flex items-center gap-2">
+                                    <i class="fa-solid fa-e text-xs bg-text-gray text-dark-gray px-1 rounded"></i>
+                                    <p class="font-semibold hover:underline">Father Figure</p>
+                                </div>
+                                <p class="text-sm text-text-gray">Taylor Swift</p>
+                            </div>
+                            <p class="text-sm text-text-gray">The Life of a Showgirl</p>
+                            <button class="opacity-0 group-hover:opacity-100 transition">
+                                <i class="fa-solid fa-heart text-spotify-green text-xl"></i>
+                            </button>
+                            <span class="text-sm text-text-gray w-12 text-right">3:32</span>
+                        </div>
+                    </div>
+
+                    <!-- Song 2 -->
+                    <div class="flex items-center justify-between p-3 rounded hover:bg-white/5 group transition cursor-pointer">
+                        <div class="flex items-center gap-4 flex-1">
+                            <span class="text-text-gray w-6 text-center">2</span>
+                            <img src="images/hamilton.jpg" alt="Say No to This" class="w-12 h-12 rounded">
+                            <div class="flex-1">
+                                <p class="font-semibold hover:underline">Say No to This</p>
+                                <p class="text-sm text-text-gray">Jasmine Cephas-Jones, Leslie Odom Jr., Lin-Manuel Miranda, Sydney James Harcourt, Ori...</p>
+                            </div>
+                            <p class="text-sm text-text-gray">Hamilton (Original Broadway Cast Recording)</p>
+                            <button class="opacity-0 group-hover:opacity-100 transition">
+                                <i class="fa-solid fa-heart text-spotify-green text-xl"></i>
+                            </button>
+                            <span class="text-sm text-text-gray w-12 text-right">4:02</span>
+                        </div>
+                    </div>
+
+                    <!-- Song 3 -->
+                    <div class="flex items-center justify-between p-3 rounded hover:bg-white/5 group transition cursor-pointer">
+                        <div class="flex items-center gap-4 flex-1">
+                            <span class="text-text-gray w-6 text-center">3</span>
+                            <img src="images/hamilton.jpg" alt="You'll Be Back" class="w-12 h-12 rounded">
+                            <div class="flex-1">
+                                <p class="font-semibold hover:underline">You'll Be Back</p>
+                                <p class="text-sm text-text-gray">Jonathan Groff, Original Broadway Cast of Hamilton</p>
+                            </div>
+                            <p class="text-sm text-text-gray">Hamilton (Original Broadway Cast Recording)</p>
+                            <button class="opacity-0 group-hover:opacity-100 transition">
+                                <i class="fa-solid fa-heart text-spotify-green text-xl"></i>
+                            </button>
+                            <span class="text-sm text-text-gray w-12 text-right">3:28</span>
+                        </div>
+                    </div>
+
+                    <!-- Song 4 -->
+                    <div class="flex items-center justify-between p-3 rounded hover:bg-white/5 group transition cursor-pointer">
+                        <div class="flex items-center gap-4 flex-1">
+                            <span class="text-text-gray w-6 text-center">4</span>
+                            <img src="images/lux.jpg" alt="La Perla" class="w-12 h-12 rounded">
+                            <div class="flex-1">
+                                <div class="flex items-center gap-2">
+                                    <i class="fa-solid fa-e text-xs bg-text-gray text-dark-gray px-1 rounded"></i>
+                                    <p class="font-semibold hover:underline">La Perla</p>
+                                </div>
+                                <p class="text-sm text-text-gray">ROSALÍA, Yahritza Y Su Esencia</p>
+                            </div>
+                            <p class="text-sm text-text-gray">LUX</p>
+                            <button class="opacity-0 group-hover:opacity-100 transition">
+                                <i class="fa-solid fa-heart text-spotify-green text-xl"></i>
+                            </button>
+                            <span class="text-sm text-text-gray w-12 text-right">3:15</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Scripts -->
+    <script src="js/userDataManager.js"></script>
+    <script src="js/cuenta.js"></script>
+</body>
+</html>
