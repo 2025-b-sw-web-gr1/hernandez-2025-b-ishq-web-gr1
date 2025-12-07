@@ -1,0 +1,370 @@
+<div class="epub-reader-container">
+    <div class="reader-header">
+        <div class="reader-controls">
+            <a href="/book/{{book.id}}" class="btn btn-secondary">← Volver</a>
+            <h2>{{book.title}}</h2>
+            <div class="reader-stats">
+                <span class="stat-badge">📄 Página {{book.currentPage}}/{{book.pageCount}}</span>
+                <span class="stat-badge">⏱️ {{formatDuration book.totalReadingTime}}</span>
+                <span class="stat-badge">📈 {{book.readingProgress}}%</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="reader-content">
+        {{#if book.epubPath}}
+            <div class="epub-viewer">
+                <div id="area" class="reading-area"></div>
+                
+                <div class="reader-navigation">
+                    <button id="prev" class="btn btn-secondary">← Anterior</button>
+                    <div class="page-info">
+                        <span id="currentLocation"></span>
+                    </div>
+                    <button id="next" class="btn btn-secondary">Siguiente →</button>
+                </div>
+
+                <div class="reader-controls-panel">
+                    <div class="control-group">
+                        <label>Tamaño de Fuente:</label>
+                        <input type="range" id="fontSize" min="12" max="24" value="16" step="1">
+                        <span id="fontSizeValue">16px</span>
+                    </div>
+
+                    <div class="control-group">
+                        <label>Ancho de Línea:</label>
+                        <input type="range" id="lineWidth" min="40" max="100" value="70" step="5">
+                        <span id="lineWidthValue">70%</span>
+                    </div>
+
+                    <div class="control-group">
+                        <button id="toggleTheme" class="btn btn-secondary">🌙 Cambiar Tema</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="reading-tracker">
+                <h3>📊 Seguimiento en Tiempo Real</h3>
+                <div class="tracker-stats">
+                    <div class="tracker-item">
+                        <span class="tracker-label">Tiempo de Sesión:</span>
+                        <span class="tracker-value" id="sessionTime">0:00</span>
+                    </div>
+                    <div class="tracker-item">
+                        <span class="tracker-label">Palabras Leídas:</span>
+                        <span class="tracker-value" id="wordsRead">0</span>
+                    </div>
+                    <div class="tracker-item">
+                        <span class="tracker-label">Páginas Leídas Hoy:</span>
+                        <span class="tracker-value" id="pagesToday">0</span>
+                    </div>
+                    <div class="tracker-item">
+                        <span class="tracker-label">Velocidad:</span>
+                        <span class="tracker-value" id="readingSpeed">0 palabras/min</span>
+                    </div>
+                </div>
+
+                <div class="session-controls">
+                    <button id="startSession" class="btn btn-primary">▶️ Iniciar Sesión</button>
+                    <button id="pauseSession" class="btn btn-secondary" disabled>⏸️ Pausar</button>
+                    <button id="endSession" class="btn btn-danger" disabled>⏹️ Terminar Sesión</button>
+                </div>
+            </div>
+
+            <script src="https://cdn.jsdelivr.net/npm/epubjs/dist/epub.min.js"></script>
+            <script>
+                // Configuración del lector EPUB
+                const book = ePub('/uploads/{{book.epubPath}}');
+                const rendition = book.renderTo('area', {
+                    width: '100%',
+                    height: 600,
+                    spread: 'none'
+                });
+
+                rendition.display();
+
+                // Navegación
+                document.getElementById('prev').addEventListener('click', () => {
+                    rendition.prev();
+                });
+
+                document.getElementById('next').addEventListener('click', () => {
+                    rendition.next();
+                });
+
+                // Controles de visualización
+                document.getElementById('fontSize').addEventListener('input', (e) => {
+                    const size = e.target.value + 'px';
+                    rendition.themes.fontSize(size);
+                    document.getElementById('fontSizeValue').textContent = size;
+                });
+
+                document.getElementById('lineWidth').addEventListener('input', (e) => {
+                    const width = e.target.value + '%';
+                    document.getElementById('lineWidthValue').textContent = width;
+                    const area = document.getElementById('area');
+                    area.style.maxWidth = width;
+                    area.style.margin = '0 auto';
+                });
+
+                // Tema claro/oscuro
+                let isDarkTheme = true;
+                document.getElementById('toggleTheme').addEventListener('click', () => {
+                    isDarkTheme = !isDarkTheme;
+                    if (isDarkTheme) {
+                        rendition.themes.override('color', '#fff');
+                        rendition.themes.override('background', '#1a1a1a');
+                    } else {
+                        rendition.themes.override('color', '#000');
+                        rendition.themes.override('background', '#fff');
+                    }
+                });
+
+                // Tema oscuro por defecto
+                rendition.themes.override('color', '#fff');
+                rendition.themes.override('background', '#1a1a1a');
+
+                // Seguimiento de lectura
+                let sessionStartTime = null;
+                let sessionDuration = 0;
+                let sessionInterval = null;
+                let currentPage = {{book.currentPage}};
+                let pagesReadToday = 0;
+                let wordsReadCount = 0;
+
+                document.getElementById('startSession').addEventListener('click', () => {
+                    sessionStartTime = Date.now();
+                    document.getElementById('startSession').disabled = true;
+                    document.getElementById('pauseSession').disabled = false;
+                    document.getElementById('endSession').disabled = false;
+
+                    sessionInterval = setInterval(updateSessionTime, 1000);
+                });
+
+                document.getElementById('pauseSession').addEventListener('click', () => {
+                    if (sessionInterval) {
+                        clearInterval(sessionInterval);
+                        sessionInterval = null;
+                        document.getElementById('pauseSession').textContent = '▶️ Continuar';
+                    } else {
+                        sessionInterval = setInterval(updateSessionTime, 1000);
+                        document.getElementById('pauseSession').textContent = '⏸️ Pausar';
+                    }
+                });
+
+                document.getElementById('endSession').addEventListener('click', async () => {
+                    if (sessionInterval) clearInterval(sessionInterval);
+                    
+                    const timeSpent = Math.floor((Date.now() - sessionStartTime) / 60000); // minutos
+                    
+                    // Guardar progreso
+                    await fetch('/book/{{book.id}}/update-progress', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            currentPage: currentPage,
+                            timeSpent: timeSpent
+                        })
+                    });
+
+                    alert('Sesión guardada: ' + timeSpent + ' minutos');
+                    window.location.href = '/book/{{book.id}}';
+                });
+
+                function updateSessionTime() {
+                    if (!sessionStartTime) return;
+                    
+                    const elapsed = Math.floor((Date.now() - sessionStartTime) / 1000);
+                    const minutes = Math.floor(elapsed / 60);
+                    const seconds = elapsed % 60;
+                    
+                    document.getElementById('sessionTime').textContent = 
+                        `${minutes}:${seconds.toString().padStart(2, '0')}`;
+                    
+                    // Actualizar velocidad de lectura
+                    if (minutes > 0) {
+                        const speed = Math.round(wordsReadCount / minutes);
+                        document.getElementById('readingSpeed').textContent = speed + ' palabras/min';
+                    }
+                }
+
+                // Actualizar contadores al cambiar de página
+                rendition.on('relocated', (location) => {
+                    currentPage++;
+                    pagesReadToday++;
+                    wordsReadCount += {{book.averageWordsPerPage}};
+                    
+                    document.getElementById('pagesToday').textContent = pagesReadToday;
+                    document.getElementById('wordsRead').textContent = wordsReadCount;
+                    document.getElementById('currentLocation').textContent = 
+                        'Página ' + currentPage + ' de {{book.pageCount}}';
+                });
+            </script>
+        {{else}}
+            <div class="empty-state">
+                <h3>No hay EPUB disponible</h3>
+                <p>Sube un archivo EPUB desde la página de detalles del libro</p>
+                <a href="/book/{{book.id}}" class="btn btn-primary">Ir a Detalles</a>
+            </div>
+        {{/if}}
+    </div>
+</div>
+
+<style>
+.epub-reader-container {
+    background: var(--bg-primary);
+    min-height: 100vh;
+    padding: 0;
+}
+
+.reader-header {
+    background: var(--bg-secondary);
+    border-bottom: 1px solid var(--border-color);
+    padding: 1rem 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.reader-controls {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.reader-controls h2 {
+    flex: 1;
+    margin: 0;
+    font-size: 1.25rem;
+    color: var(--text-primary);
+}
+
+.reader-stats {
+    display: flex;
+    gap: 1rem;
+}
+
+.stat-badge {
+    background: var(--bg-tertiary);
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+}
+
+.reader-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem;
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 2rem;
+}
+
+.epub-viewer {
+    background: var(--bg-secondary);
+    border-radius: 8px;
+    padding: 2rem;
+    border: 1px solid var(--border-color);
+}
+
+.reading-area {
+    background: #1a1a1a;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+    min-height: 600px;
+}
+
+.reader-navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.page-info {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+}
+
+.reader-controls-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    background: var(--bg-tertiary);
+    border-radius: 8px;
+}
+
+.control-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.control-group label {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    font-weight: 600;
+}
+
+.control-group input[type="range"] {
+    width: 100%;
+}
+
+.reading-tracker {
+    background: var(--bg-secondary);
+    border-radius: 8px;
+    padding: 1.5rem;
+    border: 1px solid var(--border-color);
+}
+
+.reading-tracker h3 {
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+}
+
+.tracker-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.tracker-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.75rem;
+    background: var(--bg-tertiary);
+    border-radius: 6px;
+}
+
+.tracker-label {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+.tracker-value {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.session-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.session-controls button {
+    width: 100%;
+}
+
+@media (max-width: 1024px) {
+    .reader-content {
+        grid-template-columns: 1fr;
+    }
+}
+</style>

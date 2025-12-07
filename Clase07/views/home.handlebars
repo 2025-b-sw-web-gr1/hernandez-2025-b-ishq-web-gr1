@@ -1,0 +1,255 @@
+<div class="container" style="max-width: 1400px; padding: 0 2rem;">
+    <header class="page-header">
+        <h2>Mi Biblioteca Personal</h2>
+        <p class="subtitle">Organiza y rastrea tus lecturas</p>
+    </header>
+
+    {{!-- View Controls --}}
+    <div class="view-controls">
+        <div class="filters">
+            <a href="/" class="filter-btn {{#ifEq currentFilter 'all'}}active{{/ifEq}}">Todos</a>
+            <a href="/?status=reading" class="filter-btn {{#ifEq currentFilter 'reading'}}active{{/ifEq}}">Leyendo</a>
+            <a href="/?status=to-read" class="filter-btn {{#ifEq currentFilter 'to-read'}}active{{/ifEq}}">Por Leer</a>
+            <a href="/?status=read" class="filter-btn {{#ifEq currentFilter 'read'}}active{{/ifEq}}">Leídos</a>
+            <a href="/?status=abandoned" class="filter-btn {{#ifEq currentFilter 'abandoned'}}active{{/ifEq}}">Abandonados</a>
+        </div>
+
+        <div class="view-switcher">
+            <button class="view-btn active" data-view="board">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                    <path d="M0 0h4v4H0zM6 0h4v4H6zM12 0h4v4h-4zM0 6h4v4H0zM6 6h4v4H6zM12 6h4v4h-4zM0 12h4v4H0zM6 12h4v4H6zM12 12h4v4h-4z"/>
+                </svg>
+                Board
+            </button>
+            <button class="view-btn" data-view="gallery">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                    <path d="M0 0h7v7H0zM9 0h7v7H9zM0 9h7v7H0zM9 9h7v7H9z"/>
+                </svg>
+                Gallery
+            </button>
+            <button class="view-btn" data-view="table">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                    <path d="M0 0h16v3H0zM0 5h16v3H0zM0 10h16v3H0z"/>
+                </svg>
+                Table
+            </button>
+        </div>
+    </div>
+
+    {{!-- Books Content --}}
+    <div class="books-container">
+        {{#if books}}
+            {{!-- Board View (Default) --}}
+            <div class="books-board view-content active" data-view-content="board">
+                <div class="board-column">
+                    <div class="board-column-header">
+                        <span class="board-column-title">📖 Leyendo</span>
+                        <span class="board-column-count">{{stats.reading}}</span>
+                    </div>
+                    <div class="board-cards">
+                        {{#each books}}
+                            {{#ifEq status 'reading'}}
+                                <div class="book-card">
+                                    <div class="book-cover">
+                                        <img src="{{thumbnail}}" alt="{{title}}">
+                                    </div>
+                                    <div class="book-info">
+                                        <h3 class="book-title">{{title}}</h3>
+                                        <p class="book-author">{{author}}</p>
+                                        {{#if rating}}
+                                            <div class="book-rating">{{stars rating}}</div>
+                                        {{/if}}
+                                        <div class="book-actions">
+                                            <a href="/book/{{id}}" class="btn btn-secondary">Ver</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            {{/ifEq}}
+                        {{/each}}
+                    </div>
+                </div>
+
+                <div class="board-column">
+                    <div class="board-column-header">
+                        <span class="board-column-title">📚 Por Leer</span>
+                        <span class="board-column-count">{{stats.toRead}}</span>
+                    </div>
+                    <div class="board-cards">
+                        {{#each books}}
+                            {{#ifEq status 'to-read'}}
+                                <div class="book-card">
+                                    <div class="book-cover">
+                                        <img src="{{thumbnail}}" alt="{{title}}">
+                                    </div>
+                                    <div class="book-info">
+                                        <h3 class="book-title">{{title}}</h3>
+                                        <p class="book-author">{{author}}</p>
+                                        <div class="book-actions">
+                                            <a href="/book/{{id}}" class="btn btn-secondary">Ver</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            {{/ifEq}}
+                        {{/each}}
+                    </div>
+                </div>
+
+                <div class="board-column">
+                    <div class="board-column-header">
+                        <span class="board-column-title">✅ Completados</span>
+                        <span class="board-column-count">{{stats.read}}</span>
+                    </div>
+                    <div class="board-cards">
+                        {{#each books}}
+                            {{#ifEq status 'read'}}
+                                <div class="book-card">
+                                    <div class="book-cover">
+                                        <img src="{{thumbnail}}" alt="{{title}}">
+                                    </div>
+                                    <div class="book-info">
+                                        <h3 class="book-title">{{title}}</h3>
+                                        <p class="book-author">{{author}}</p>
+                                        {{#if rating}}
+                                            <div class="book-rating">{{stars rating}}</div>
+                                        {{/if}}
+                                        <div class="book-actions">
+                                            <a href="/book/{{id}}" class="btn btn-secondary">Ver</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            {{/ifEq}}
+                        {{/each}}
+                    </div>
+                </div>
+
+                <div class="board-column">
+                    <div class="board-column-header">
+                        <span class="board-column-title">❌ Abandonados</span>
+                        <span class="board-column-count">{{stats.abandoned}}</span>
+                    </div>
+                    <div class="board-cards">
+                        {{#each books}}
+                            {{#ifEq status 'abandoned'}}
+                                <div class="book-card">
+                                    <div class="book-cover">
+                                        <img src="{{thumbnail}}" alt="{{title}}">
+                                    </div>
+                                    <div class="book-info">
+                                        <h3 class="book-title">{{title}}</h3>
+                                        <p class="book-author">{{author}}</p>
+                                        <div class="book-actions">
+                                            <a href="/book/{{id}}" class="btn btn-secondary">Ver</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            {{/ifEq}}
+                        {{/each}}
+                    </div>
+                </div>
+            </div>
+
+            {{!-- Gallery View --}}
+            <div class="books-gallery view-content" data-view-content="gallery" style="display: none;">
+                {{#each books}}
+                    <div class="book-card">
+                        <div class="book-cover">
+                            <img src="{{thumbnail}}" alt="{{title}}">
+                            <div class="book-status status-{{status}}">
+                                {{#ifEq status 'reading'}}Leyendo{{/ifEq}}
+                                {{#ifEq status 'to-read'}}Por Leer{{/ifEq}}
+                                {{#ifEq status 'read'}}Leído{{/ifEq}}
+                                {{#ifEq status 'abandoned'}}Abandonado{{/ifEq}}
+                            </div>
+                        </div>
+                        <div class="book-info">
+                            <h3 class="book-title">{{title}}</h3>
+                            <p class="book-author">{{author}}</p>
+                            {{#if rating}}
+                                <div class="book-rating">{{stars rating}}</div>
+                            {{/if}}
+                            <div class="book-actions">
+                                <a href="/book/{{id}}" class="btn btn-primary">Ver Detalles</a>
+                            </div>
+                        </div>
+                    </div>
+                {{/each}}
+            </div>
+
+            {{!-- Table View --}}
+            <div class="view-content" data-view-content="table" style="display: none;">
+                <table class="books-table">
+                    <thead>
+                        <tr>
+                            <th>Portada</th>
+                            <th>Título</th>
+                            <th>Autor</th>
+                            <th>Estado</th>
+                            <th>Rating</th>
+                            <th>Publicación</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each books}}
+                            <tr>
+                                <td>
+                                    <img src="{{thumbnail}}" alt="{{title}}" class="table-book-cover">
+                                </td>
+                                <td><strong>{{title}}</strong></td>
+                                <td>{{author}}</td>
+                                <td>
+                                    <span class="table-status status-{{status}}">
+                                        {{#ifEq status 'reading'}}Leyendo{{/ifEq}}
+                                        {{#ifEq status 'to-read'}}Por Leer{{/ifEq}}
+                                        {{#ifEq status 'read'}}Leído{{/ifEq}}
+                                        {{#ifEq status 'abandoned'}}Abandonado{{/ifEq}}
+                                    </span>
+                                </td>
+                                <td>
+                                    {{#if rating}}
+                                        <span style="color: var(--accent-yellow);">{{stars rating}}</span>
+                                    {{else}}
+                                        <span style="color: var(--text-tertiary);">Sin calificar</span>
+                                    {{/if}}
+                                </td>
+                                <td>{{publishedDate}}</td>
+                                <td>
+                                    <div class="table-actions">
+                                        <a href="/book/{{id}}" class="btn btn-primary">Ver</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+
+        {{else}}
+            <div class="empty-state">
+                <div class="empty-icon">📚</div>
+                <h3>No hay libros en esta categoría</h3>
+                <p>Comienza agregando libros desde la búsqueda</p>
+                <a href="/search" class="btn btn-primary">Buscar Libros</a>
+            </div>
+        {{/if}}
+    </div>
+</div>
+
+<script>
+// View Switcher Logic
+document.querySelectorAll('.view-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        const view = btn.dataset.view;
+        
+        // Update active button
+        document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        
+        // Update visible content
+        document.querySelectorAll('.view-content').forEach(content => {
+            content.style.display = 'none';
+        });
+        document.querySelector(`[data-view-content="${view}"]`).style.display = view === 'table' ? 'block' : 'grid';
+    });
+});
+</script>

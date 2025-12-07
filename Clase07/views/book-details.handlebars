@@ -1,0 +1,392 @@
+<div class="container" style="max-width: 1400px; padding: 0 2rem;">
+    <div class="book-details">
+        <div class="book-details-header">
+            <a href="/" class="back-link">← Volver a Mis Libros</a>
+        </div>
+
+        <div class="book-details-layout">
+            <div class="book-details-main">
+                <div class="book-details-content">
+                    <div class="book-details-cover">
+                        <img src="{{book.thumbnail}}" alt="{{book.title}}">
+                        {{#if book.epubPath}}
+                            <a href="/book/{{book.id}}/reader" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">
+                                📖 Abrir Lector
+                            </a>
+                        {{else}}
+                            <form method="POST" action="/book/{{book.id}}/upload-epub" enctype="multipart/form-data" style="margin-top: 1rem;">
+                                <input type="file" name="epub" accept=".epub" required style="margin-bottom: 0.5rem; width: 100%; padding: 0.5rem; background: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: 6px; color: var(--text-primary);">
+                                <button type="submit" class="btn btn-primary" style="width: 100%;">📤 Subir EPUB</button>
+                            </form>
+                        {{/if}}
+                    </div>
+
+                    <div class="book-details-info">
+                        <h1>{{book.title}}</h1>
+                        <h2 class="author">{{book.author}}</h2>
+                        
+                        <div class="book-meta-info">
+                            {{#if book.publishedDate}}
+                                <span class="meta-item">📅 {{book.publishedDate}}</span>
+                            {{/if}}
+                            {{#if book.pageCount}}
+                                <span class="meta-item">📄 {{book.pageCount}} páginas</span>
+                            {{/if}}
+                            <span class="meta-item status-{{book.status}}">
+                                {{#eq book.status 'reading'}}📖 Leyendo{{/eq}}
+                                {{#eq book.status 'to-read'}}📚 Por Leer{{/eq}}
+                                {{#eq book.status 'read'}}✅ Leído{{/eq}}
+                                {{#eq book.status 'abandoned'}}❌ Abandonado{{/eq}}
+                            </span>
+                        </div>
+
+                        {{#if book.genres}}
+                            <div class="genres-section">
+                                <h3>Géneros</h3>
+                                <div class="genres-tags">
+                                    {{#each book.genres}}
+                                        <span class="genre-tag">{{this}}</span>
+                                    {{/each}}
+                                </div>
+                            </div>
+                        {{/if}}
+
+                        {{#if book.description}}
+                            <div class="book-description">
+                                <h3>Descripción</h3>
+                                <p>{{book.description}}</p>
+                            </div>
+                        {{/if}}
+
+                        {{!-- Métricas de Lectura --}}
+                        <div class="reading-metrics">
+                            <h3>📊 Métricas de Lectura</h3>
+                            <div class="metrics-grid">
+                                <div class="metric-card">
+                                    <div class="metric-icon">📖</div>
+                                    <div class="metric-value">{{book.currentPage}} / {{book.pageCount}}</div>
+                                    <div class="metric-label">Páginas Leídas</div>
+                                </div>
+                                <div class="metric-card">
+                                    <div class="metric-icon">📈</div>
+                                    <div class="metric-value">{{book.readingProgress}}%</div>
+                                    <div class="metric-label">Progreso</div>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: {{book.readingProgress}}%"></div>
+                                    </div>
+                                </div>
+                                <div class="metric-card">
+                                    <div class="metric-icon">⏱️</div>
+                                    <div class="metric-value">{{formatDuration book.totalReadingTime}}</div>
+                                    <div class="metric-label">Tiempo Total</div>
+                                </div>
+                                <div class="metric-card">
+                                    <div class="metric-icon">📅</div>
+                                    <div class="metric-value">
+                                        {{#if book.startDate}}
+                                            {{#if book.endDate}}
+                                                {{daysBetween book.startDate book.endDate}} días
+                                            {{else}}
+                                                {{daysBetween book.startDate "2025-12-07"}} días
+                                            {{/if}}
+                                        {{else}}
+                                            0 días
+                                        {{/if}}
+                                    </div>
+                                    <div class="metric-label">Duración</div>
+                                </div>
+                                <div class="metric-card">
+                                    <div class="metric-icon">💬</div>
+                                    <div class="metric-value">{{book.totalWords}}</div>
+                                    <div class="metric-label">Total Palabras</div>
+                                </div>
+                                <div class="metric-card">
+                                    <div class="metric-icon">📝</div>
+                                    <div class="metric-value">{{book.averageWordsPerPage}}</div>
+                                    <div class="metric-label">Palabras/Página</div>
+                                </div>
+                                <div class="metric-card">
+                                    <div class="metric-icon">📚</div>
+                                    <div class="metric-value">{{book.chapters}}</div>
+                                    <div class="metric-label">Capítulos</div>
+                                </div>
+                                <div class="metric-card">
+                                    <div class="metric-icon">⏰</div>
+                                    <div class="metric-value">{{estimatedReadingTime book.pageCount}}</div>
+                                    <div class="metric-label">Tiempo Estimado</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {{!-- Fechas de Lectura --}}
+                        <div class="reading-dates">
+                            <h3>📅 Fechas de Lectura</h3>
+                            <div class="dates-grid">
+                                <div class="date-item">
+                                    <span class="date-label">Inicio:</span>
+                                    <span class="date-value">
+                                        {{#if book.startDate}}
+                                            {{formatDate book.startDate}}
+                                        {{else}}
+                                            No iniciado
+                                        {{/if}}
+                                    </span>
+                                </div>
+                                <div class="date-item">
+                                    <span class="date-label">Fin:</span>
+                                    <span class="date-value">
+                                        {{#if book.endDate}}
+                                            {{formatDate book.endDate}}
+                                        {{else}}
+                                            En progreso
+                                        {{/if}}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        {{!-- Sesiones de Lectura --}}
+                        {{#if book.readingSessions}}
+                            <div class="reading-sessions">
+                                <h3>📖 Historial de Sesiones</h3>
+                                <div class="sessions-list">
+                                    {{#each book.readingSessions}}
+                                        <div class="session-item">
+                                            <div class="session-date">{{date}}</div>
+                                            <div class="session-pages">Págs {{startPage}}-{{endPage}}</div>
+                                            <div class="session-duration">{{../formatDuration duration}}</div>
+                                        </div>
+                                    {{/each}}
+                                </div>
+                            </div>
+                        {{/if}}
+                    </div>
+                </div>
+
+                {{!-- Formulario de Actualización --}}
+                <div class="update-section">
+                    <h3>✏️ Actualizar Información</h3>
+                    <form method="POST" action="/book/{{book.id}}/update" class="update-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="status">Estado:</label>
+                                <select name="status" id="status" class="form-control">
+                                    <option value="to-read" {{#eq book.status 'to-read'}}selected{{/eq}}>Por Leer</option>
+                                    <option value="reading" {{#eq book.status 'reading'}}selected{{/eq}}>Leyendo</option>
+                                    <option value="read" {{#eq book.status 'read'}}selected{{/eq}}>Leído</option>
+                                    <option value="abandoned" {{#eq book.status 'abandoned'}}selected{{/eq}}>Abandonado</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="rating">Calificación:</label>
+                                <div class="rating-input">
+                                    <input 
+                                        type="range" 
+                                        name="rating" 
+                                        id="rating" 
+                                        min="0" 
+                                        max="5" 
+                                        value="{{book.rating}}"
+                                        class="form-control"
+                                    >
+                                    <output id="ratingValue">{{book.rating}}</output> ⭐
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="startDate">Fecha de Inicio:</label>
+                                <input 
+                                    type="datetime-local" 
+                                    name="startDate" 
+                                    id="startDate" 
+                                    class="form-control"
+                                    value="{{book.startDate}}"
+                                >
+                            </div>
+
+                            <div class="form-group">
+                                <label for="endDate">Fecha de Fin:</label>
+                                <input 
+                                    type="datetime-local" 
+                                    name="endDate" 
+                                    id="endDate" 
+                                    class="form-control"
+                                    value="{{book.endDate}}"
+                                >
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="currentPage">Página Actual:</label>
+                                <input 
+                                    type="number" 
+                                    name="currentPage" 
+                                    id="currentPage" 
+                                    class="form-control"
+                                    value="{{book.currentPage}}"
+                                    min="0"
+                                    max="{{book.pageCount}}"
+                                >
+                            </div>
+
+                            <div class="form-group">
+                                <label for="chapters">Capítulos:</label>
+                                <input 
+                                    type="number" 
+                                    name="chapters" 
+                                    id="chapters" 
+                                    class="form-control"
+                                    value="{{book.chapters}}"
+                                    min="0"
+                                >
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="genres">Géneros (separados por coma):</label>
+                            <input 
+                                type="text" 
+                                name="genres" 
+                                id="genres" 
+                                class="form-control"
+                                value="{{#each book.genres}}{{this}}{{#unless @last}}, {{/unless}}{{/each}}"
+                                placeholder="Ej: Ficción, Fantasía, Aventura"
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="averageWordsPerPage">Palabras por Página:</label>
+                            <input 
+                                type="number" 
+                                name="averageWordsPerPage" 
+                                id="averageWordsPerPage" 
+                                class="form-control"
+                                value="{{book.averageWordsPerPage}}"
+                                min="100"
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="notes">Notas Personales:</label>
+                            <textarea 
+                                name="notes" 
+                                id="notes" 
+                                rows="4" 
+                                class="form-control"
+                                placeholder="Escribe tus notas sobre este libro..."
+                            >{{book.notes}}</textarea>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">💾 Guardar Cambios</button>
+                        </div>
+                    </form>
+
+                    <form method="POST" action="/book/{{book.id}}/delete" class="delete-form" onsubmit="return confirm('¿Estás seguro de que quieres eliminar este libro?')">
+                        <button type="submit" class="btn btn-danger">🗑️ Eliminar Libro</button>
+                    </form>
+                </div>
+            </div>
+
+            {{!-- Panel lateral para agregar sesión --}}
+            <div class="add-session-panel">
+                <h3>➕ Registrar Sesión de Lectura</h3>
+                <form id="addSessionForm" class="session-form">
+                    <div class="form-group">
+                        <label for="sessionStartPage">Página Inicial:</label>
+                        <input 
+                            type="number" 
+                            id="sessionStartPage" 
+                            class="form-control"
+                            min="0"
+                            max="{{book.pageCount}}"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="sessionEndPage">Página Final:</label>
+                        <input 
+                            type="number" 
+                            id="sessionEndPage" 
+                            class="form-control"
+                            min="0"
+                            max="{{book.pageCount}}"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="sessionDuration">Duración (minutos):</label>
+                        <input 
+                            type="number" 
+                            id="sessionDuration" 
+                            class="form-control"
+                            min="1"
+                            required
+                        >
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">📝 Guardar Sesión</button>
+                </form>
+
+                <div id="sessionMessage" style="margin-top: 1rem; display: none;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+const ratingInput = document.getElementById('rating');
+const ratingValue = document.getElementById('ratingValue');
+
+ratingInput.addEventListener('input', (e) => {
+    ratingValue.textContent = e.target.value;
+});
+
+// Agregar sesión de lectura
+document.getElementById('addSessionForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const startPage = document.getElementById('sessionStartPage').value;
+    const endPage = document.getElementById('sessionEndPage').value;
+    const duration = document.getElementById('sessionDuration').value;
+    
+    try {
+        const response = await fetch('/book/{{book.id}}/add-session', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                startPage: parseInt(startPage),
+                endPage: parseInt(endPage),
+                duration: parseInt(duration)
+            })
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            const messageDiv = document.getElementById('sessionMessage');
+            messageDiv.textContent = '✅ Sesión guardada correctamente';
+            messageDiv.style.display = 'block';
+            messageDiv.style.color = 'var(--accent-green)';
+            
+            // Recargar página después de 1 segundo
+            setTimeout(() => {
+                window.location.reload();
+            }, 1000);
+        }
+    } catch (error) {
+        const messageDiv = document.getElementById('sessionMessage');
+        messageDiv.textContent = '❌ Error al guardar sesión';
+        messageDiv.style.display = 'block';
+        messageDiv.style.color = 'var(--accent-red)';
+    }
+});
+</script>

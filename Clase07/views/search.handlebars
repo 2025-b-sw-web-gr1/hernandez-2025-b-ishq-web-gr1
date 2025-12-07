@@ -1,0 +1,181 @@
+<div class="container" style="max-width: 1400px; padding: 0 2rem;">
+    <header class="page-header">
+        <h2>Buscar Libros</h2>
+        <p class="subtitle">Busca libros en Google Books y agrégalos a tu biblioteca</p>
+    </header>
+
+    <div class="search-section">
+        <div class="search-box">
+            <input 
+                type="text" 
+                id="searchInput" 
+                class="search-input" 
+                placeholder="Buscar por título, autor o ISBN..."
+                autocomplete="off"
+            >
+            <button id="searchBtn" class="btn btn-primary">Buscar</button>
+        </div>
+
+        <div id="loadingIndicator" class="loading-indicator" style="display: none;">
+            <div class="spinner"></div>
+            <p>Buscando libros...</p>
+        </div>
+
+        <div id="searchResults" class="search-results"></div>
+    </div>
+</div>
+
+<script>
+const searchInput = document.getElementById('searchInput');
+const searchBtn = document.getElementById('searchBtn');
+const searchResults = document.getElementById('searchResults');
+const loadingIndicator = document.getElementById('loadingIndicator');
+
+// Buscar al hacer clic
+searchBtn.addEventListener('click', performSearch);
+
+// Buscar al presionar Enter
+searchInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+        performSearch();
+    }
+});
+
+async function performSearch() {
+    const query = searchInput.value.trim();
+    
+    if (!query) {
+        alert('Por favor ingresa un término de búsqueda');
+        return;
+    }
+
+    searchResults.innerHTML = '';
+    loadingIndicator.style.display = 'flex';
+
+    try {
+        const response = await fetch(`/api/search?q=${encodeURIComponent(query)}`);
+        const data = await response.json();
+
+        loadingIndicator.style.display = 'none';
+
+        if (data.error) {
+            searchResults.innerHTML = `
+                <div class="error-message">
+                    <p>Error: ${data.error}</p>
+                </div>
+            `;
+            return;
+        }
+
+        if (!data.books || data.books.length === 0) {
+            searchResults.innerHTML = `
+                <div class="empty-state">
+                    <h3>No se encontraron resultados</h3>
+                    <p>Intenta con otros términos de búsqueda</p>
+                </div>
+            `;
+            return;
+        }
+
+        displayResults(data.books);
+    } catch (error) {
+        loadingIndicator.style.display = 'none';
+        searchResults.innerHTML = `
+            <div class="error-message">
+                <p>Error al buscar libros. Por favor intenta nuevamente.</p>
+            </div>
+        `;
+        console.error('Error:', error);
+    }
+}
+
+function displayResults(books) {
+    searchResults.innerHTML = `
+        <div class="results-header">
+            <h3>Resultados de búsqueda (${books.length})</h3>
+        </div>
+        <div class="books-grid">
+            ${books.map(book => `
+                <div class="book-card search-result">
+                    <div class="book-cover">
+                        <img src="${book.thumbnail}" alt="${book.title}">
+                    </div>
+                    <div class="book-info">
+                        <h3 class="book-title">${book.title}</h3>
+                        <p class="book-author">${book.author}</p>
+                        <p class="book-meta">${book.publishedDate || 'N/A'} ${book.pageCount ? '· ' + book.pageCount + ' páginas' : ''}</p>
+                        <p class="book-description">${truncate(book.description, 150)}</p>
+                        <div class="add-book-form">
+                            <select class="status-select" data-book-id="${book.googleId}">
+                                <option value="to-read">Por Leer</option>
+                                <option value="reading">Leyendo</option>
+                                <option value="read">Leído</option>
+                                <option value="abandoned">Abandonado</option>
+                            </select>
+                            <button 
+                                class="btn btn-primary add-book-btn" 
+                                data-book='${JSON.stringify(book).replace(/'/g, "&apos;")}'
+                            >
+                                Agregar a Mi Biblioteca
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('')}
+        </div>
+    `;
+
+    // Agregar event listeners a los botones
+    document.querySelectorAll('.add-book-btn').forEach(btn => {
+        btn.addEventListener('click', addBookToLibrary);
+    });
+}
+
+async function addBookToLibrary(e) {
+    const btn = e.target;
+    const bookData = JSON.parse(btn.dataset.book);
+    const statusSelect = btn.parentElement.querySelector('.status-select');
+    const status = statusSelect.value;
+
+    btn.disabled = true;
+    btn.textContent = 'Agregando...';
+
+    try {
+        const response = await fetch('/api/books', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                ...bookData,
+                status: status,
+                pageCount: bookData.pageCount || 0,
+                categories: bookData.categories || ''
+            })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            btn.textContent = '¡Agregado!';
+            btn.classList.add('btn-success');
+            setTimeout(() => {
+                window.location.href = '/';
+            }, 1000);
+        } else {
+            throw new Error('Error al agregar libro');
+        }
+    } catch (error) {
+        btn.disabled = false;
+        btn.textContent = 'Error - Reintentar';
+        btn.classList.add('btn-error');
+        console.error('Error:', error);
+    }
+}
+
+function truncate(text, length) {
+    if (!text) return 'Sin descripción disponible';
+    if (text.length <= length) return text;
+    return text.substring(0, length) + '...';
+}
+</script>
