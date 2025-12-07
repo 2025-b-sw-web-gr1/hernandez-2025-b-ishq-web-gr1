@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xmlns:foaf="http://xmlns.com/foaf/0.1/"
+    xmlns:bibo="http://purl.org/ontology/bibo/"
+    xmlns:schema="http://schema.org/">
+
+    <!-- ========================================
+         AUTORES
+         ======================================== -->
+    
+    <!-- Gabriel García Márquez -->
+    <foaf:Person rdf:about="http://example.org/author/gabriel-garcia-marquez">
+        <foaf:name>Gabriel García Márquez</foaf:name>
+        <foaf:givenName>Gabriel</foaf:givenName>
+        <foaf:familyName>García Márquez</foaf:familyName>
+        <schema:birthDate>1927-03-06</schema:birthDate>
+        <schema:deathDate>2014-04-17</schema:deathDate>
+        <schema:nationality>Colombiano</schema:nationality>
+        <schema:award>Premio Nobel de Literatura (1982)</schema:award>
+        <dc:description>Escritor, novelista, cuentista y periodista colombiano. Uno de los autores más significativos del siglo XX.</dc:description>
+    </foaf:Person>
+
+    <!-- Jorge Luis Borges -->
+    <foaf:Person rdf:about="http://example.org/author/jorge-luis-borges">
+        <foaf:name>Jorge Luis Borges</foaf:name>
+        <foaf:givenName>Jorge Luis</foaf:givenName>
+        <foaf:familyName>Borges</foaf:familyName>
+        <schema:birthDate>1899-08-24</schema:birthDate>
+        <schema:deathDate>1986-06-14</schema:deathDate>
+        <schema:nationality>Argentino</schema:nationality>
+        <dc:description>Escritor argentino, uno de los autores más destacados de la literatura del siglo XX.</dc:description>
+    </foaf:Person>
+
+    <!-- Isabel Allende -->
+    <foaf:Person rdf:about="http://example.org/author/isabel-allende">
+        <foaf:name>Isabel Allende</foaf:name>
+        <foaf:givenName>Isabel</foaf:givenName>
+        <foaf:familyName>Allende</foaf:familyName>
+        <schema:birthDate>1942-08-02</schema:birthDate>
+        <schema:nationality>Chilena</schema:nationality>
+        <dc:description>Escritora chilena, una de las novelistas más leídas del mundo en lengua española.</dc:description>
+    </foaf:Person>
+
+    <!-- ========================================
+         GÉNEROS LITERARIOS
+         ======================================== -->
+    
+    <schema:Genre rdf:about="http://example.org/genre/realismo-magico">
+        <dc:title>Realismo Mágico</dc:title>
+        <dc:description>Género narrativo que combina elementos realistas con elementos fantásticos y mágicos presentados como parte de la realidad cotidiana.</dc:description>
+    </schema:Genre>
+
+    <schema:Genre rdf:about="http://example.org/genre/ficcion">
+        <dc:title>Ficción</dc:title>
+        <dc:description>Género literario que narra acontecimientos imaginarios o inventados.</dc:description>
+    </schema:Genre>
+
+    <schema:Genre rdf:about="http://example.org/genre/narrativa-latinoamericana">
+        <dc:title>Narrativa Latinoamericana</dc:title>
+        <dc:description>Conjunto de obras literarias producidas por autores de América Latina.</dc:description>
+    </schema:Genre>
+
+    <!-- ========================================
+         LIBROS
+         ======================================== -->
+
+    <!-- Cien años de soledad -->
+    <bibo:Book rdf:about="http://example.org/book/cien-anos-de-soledad">
+        <dc:title>Cien años de soledad</dc:title>
+        <dc:creator rdf:resource="http://example.org/author/gabriel-garcia-marquez"/>
+        <dc:date>1967</dc:date>
+        <dc:language>es</dc:language>
+        <bibo:isbn>978-0307474728</bibo:isbn>
+        <bibo:numPages>417</bibo:numPages>
+        <dc:publisher>Editorial Sudamericana</dc:publisher>
+        <schema:genre rdf:resource="http://example.org/genre/realismo-magico"/>
+        <schema:genre rdf:resource="http://example.org/genre/narrativa-latinoamericana"/>
+        <dc:description>Novela emblemática del realismo mágico que narra la historia de la familia Buendía a lo largo de siete generaciones en el pueblo ficticio de Macondo.</dc:description>
+        <schema:aggregateRating>
+            <schema:Rating>
+                <schema:ratingValue>5</schema:ratingValue>
+                <schema:bestRating>5</schema:bestRating>
+            </schema:Rating>
+        </schema:aggregateRating>
+    </bibo:Book>
+
+    <!-- El amor en los tiempos del cólera -->
+    <bibo:Book rdf:about="http://example.org/book/el-amor-en-los-tiempos-del-colera">
+        <dc:title>El amor en los tiempos del cólera</dc:title>
+        <dc:creator rdf:resource="http://example.org/author/gabriel-garcia-marquez"/>
+        <dc:date>1985</dc:date>
+        <dc:language>es</dc:language>
+        <bibo:isbn>978-0307387738</bibo:isbn>
+        <bibo:numPages>368</bibo:numPages>
+        <dc:publisher>Editorial Oveja Negra</dc:publisher>
+        <schema:genre rdf:resource="http://example.org/genre/realismo-magico"/>
+        <schema:genre rdf:resource="http://example.org/genre/narrativa-latinoamericana"/>
+        <dc:description>Historia de amor que transcurre más de cincuenta años entre Florentino Ariza y Fermina Daza.</dc:description>
+        <schema:aggregateRating>
+            <schema:Rating>
+                <schema:ratingValue>5</schema:ratingValue>
+                <schema:bestRating>5</schema:bestRating>
+            </schema:Rating>
+        </schema:aggregateRating>
+    </bibo:Book>
+
+    <!-- Ficciones -->
+    <bibo:Book rdf:about="http://example.org/book/ficciones">
+        <dc:title>Ficciones</dc:title>
+        <dc:creator rdf:resource="http://example.org/author/jorge-luis-borges"/>
+        <dc:date>1944</dc:date>
+        <dc:language>es</dc:language>
+        <bibo:isbn>978-0802130303</bibo:isbn>
+        <bibo:numPages>174</bibo:numPages>
+        <dc:publisher>Editorial Sur</dc:publisher>
+        <schema:genre rdf:resource="http://example.org/genre/ficcion"/>
+        <dc:description>Colección de cuentos que incluye algunas de las obras más conocidas de Borges como "El jardín de senderos que se bifurcan" y "La biblioteca de Babel".</dc:description>
+        <schema:aggregateRating>
+            <schema:Rating>
+                <schema:ratingValue>5</schema:ratingValue>
+                <schema:bestRating>5</schema:bestRating>
+            </schema:Rating>
+        </schema:aggregateRating>
+    </bibo:Book>
+
+    <!-- La casa de los espíritus -->
+    <bibo:Book rdf:about="http://example.org/book/la-casa-de-los-espiritus">
+        <dc:title>La casa de los espíritus</dc:title>
+        <dc:creator rdf:resource="http://example.org/author/isabel-allende"/>
+        <dc:date>1982</dc:date>
+        <dc:language>es</dc:language>
+        <bibo:isbn>978-0525433460</bibo:isbn>
+        <bibo:numPages>433</bibo:numPages>
+        <dc:publisher>Plaza y Janés</dc:publisher>
+        <schema:genre rdf:resource="http://example.org/genre/realismo-magico"/>
+        <schema:genre rdf:resource="http://example.org/genre/narrativa-latinoamericana"/>
+        <dc:description>Novela que narra la historia de la familia Trueba a través de cuatro generaciones, mezclando lo político con lo mágico.</dc:description>
+        <schema:aggregateRating>
+            <schema:Rating>
+                <schema:ratingValue>4</schema:ratingValue>
+                <schema:bestRating>5</schema:bestRating>
+            </schema:Rating>
+        </schema:aggregateRating>
+    </bibo:Book>
+
+    <!-- ========================================
+         RELACIONES ENTRE AUTORES Y OBRAS
+         ======================================== -->
+
+    <!-- Gabriel García Márquez escribió múltiples obras -->
+    <rdf:Description rdf:about="http://example.org/author/gabriel-garcia-marquez">
+        <foaf:made rdf:resource="http://example.org/book/cien-anos-de-soledad"/>
+        <foaf:made rdf:resource="http://example.org/book/el-amor-en-los-tiempos-del-colera"/>
+    </rdf:Description>
+
+    <!-- Jorge Luis Borges escribió Ficciones -->
+    <rdf:Description rdf:about="http://example.org/author/jorge-luis-borges">
+        <foaf:made rdf:resource="http://example.org/book/ficciones"/>
+    </rdf:Description>
+
+    <!-- Isabel Allende escribió La casa de los espíritus -->
+    <rdf:Description rdf:about="http://example.org/author/isabel-allende">
+        <foaf:made rdf:resource="http://example.org/book/la-casa-de-los-espiritus"/>
+    </rdf:Description>
+
+    <!-- ========================================
+         RELACIONES ENTRE LIBROS
+         ======================================== -->
+
+    <!-- Libros relacionados por género -->
+    <rdf:Description rdf:about="http://example.org/book/cien-anos-de-soledad">
+        <schema:relatedLink rdf:resource="http://example.org/book/el-amor-en-los-tiempos-del-colera"/>
+        <schema:relatedLink rdf:resource="http://example.org/book/la-casa-de-los-espiritus"/>
+    </rdf:Description>
+
+</rdf:RDF>

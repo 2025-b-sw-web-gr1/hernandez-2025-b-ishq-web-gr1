@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weekly Reading Planner - RDF Library</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Hero Section -->
+    <div class="hero-banner">
+        <div class="hero-images">
+            <div class="hero-img" style="background: linear-gradient(135deg, #f5e6d3 0%, #d4c5b0 100%)"></div>
+            <div class="hero-img" style="background: linear-gradient(135deg, #e8dcc8 0%, #c9b8a0 100%)"></div>
+            <div class="hero-img" style="background: linear-gradient(135deg, #d4c5b0 0%, #b8a890 100%)"></div>
+            <div class="hero-img" style="background: linear-gradient(135deg, #c9b8a0 0%, #a89580 100%)"></div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Header -->
+        <header class="main-header">
+            <h1>~ WEEKLY~PLANNER~</h1>
+        </header>
+
+        <!-- Quote Section -->
+        <div class="quote-section">
+            <p class="quote-text">"Believe that you can, and you're halfway there." <em>- Theodore Roosevelt</em></p>
+        </div>
+
+        <!-- Profile Section -->
+        <div class="profile-section">
+            <div class="profile-image">
+                <div class="coffee-cup"></div>
+            </div>
+            <p class="welcome-text">Welcome, Reader &lt;3</p>
+            <div class="links-section">
+                <a href="biblioteca.rdf" download class="link-item">
+                    <span>Download RDF File</span>
+                </a>
+                <a href="#metadata" class="link-item">
+                    <span>View Metadata</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Weekly Schedule Section -->
+        <section class="weekly-schedule">
+            <h2 class="schedule-title">WEEKLY~SCHEDULE</h2>
+            
+            <table class="schedule-table">
+                <thead>
+                    <tr>
+                        <th class="time-col">TIME</th>
+                        <th>Sun.</th>
+                        <th>Mon.</th>
+                        <th>Tue.</th>
+                        <th>Wed.</th>
+                        <th>Thu.</th>
+                        <th>Fri.</th>
+                        <th>Sat.</th>
+                    </tr>
+                    <tr class="overall-row">
+                        <td class="overall-label">OVERALL</td>
+                        <td class="task-cell italic">RDF Overview</td>
+                        <td class="task-cell italic">Author Analysis</td>
+                        <td class="task-cell italic">Book Metadata</td>
+                        <td class="task-cell italic">Genre Study</td>
+                        <td class="task-cell italic">Triple Relations</td>
+                        <td class="task-cell italic">Semantic Web</td>
+                        <td class="task-cell italic">Integration Day</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="time-cell">06:00-07:00am</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td class="task-cell">Get ready for RDF Classes</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="time-cell">07:00-08:00</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td class="task-cell italic">RDF Classes</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="time-cell">08:00-09:00</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td class="task-cell italic">RDF Classes</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="time-cell">09:00-10:00</td>
+                        <td></td>
+                        <td class="task-cell">Get ready for Church</td>
+                        <td></td>
+                        <td class="task-cell italic">RDF Classes</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="time-cell">10:00-11:00</td>
+                        <td></td>
+                        <td class="task-cell">Church</td>
+                        <td class="task-cell">Get ready for Book Classes</td>
+                        <td class="task-cell italic">RDF Classes</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="time-cell">11:00-12:00</td>
+                        <td></td>
+                        <td class="task-cell">Church</td>
+                        <td class="task-cell">Plus Classes</td>
+                        <td class="task-cell italic">RDF Classes</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="time-cell">12:00-1:00pm</td>
+                        <td></td>
+                        <td></td>
+                        <td class="task-cell">Plus Classes</td>
+                        <td class="task-cell italic">RDF Classes</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="time-cell">01:00-02:00</td>
+                        <td></td>
+                        <td></td>
+                        <td class="task-cell">Plus Classes</td>
+                        <td class="task-cell italic">RDF Classes</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- RDF Metadata Section -->
+        <section id="metadata" class="rdf-metadata-section">
+            <h2 class="section-title">RDF Library Metadata</h2>
+            
+            <div class="metadata-intro">
+                <p><strong>Resource Description Framework (RDF)</strong> is a W3C standard for representing information in the Web using a triple-based model (subject, predicate, object).</p>
+                <div class="namespace-tags">
+                    <span class="tag">rdf: RDF Syntax</span>
+                    <span class="tag">dc: Dublin Core</span>
+                    <span class="tag">foaf: Friend of a Friend</span>
+                    <span class="tag">bibo: Bibliographic Ontology</span>
+                    <span class="tag">schema: Schema.org</span>
+                </div>
+            </div>
+
+            <div class="metadata-grid">
+                <!-- Authors Section -->
+                <div class="metadata-card">
+                    <h3 class="card-header">Authors (foaf:Person)</h3>
+                    
+                    <div class="author-item">
+                        <h4>Gabriel García Márquez</h4>
+                        <div class="meta-details">
+                            <span class="meta-badge">Colombian</span>
+                            <span class="meta-badge">Nobel Prize 1982</span>
+                        </div>
+                        <p class="meta-text">1927-03-06 — 2014-04-17</p>
+                        <p class="meta-desc">Writer, novelist, short story writer and journalist. One of the most significant authors of the 20th century.</p>
+                    </div>
+
+                    <div class="author-item">
+                        <h4>Jorge Luis Borges</h4>
+                        <div class="meta-details">
+                            <span class="meta-badge">Argentinian</span>
+                        </div>
+                        <p class="meta-text">1899-08-24 — 1986-06-14</p>
+                        <p class="meta-desc">Argentine writer, one of the most outstanding authors of 20th century literature.</p>
+                    </div>
+
+                    <div class="author-item">
+                        <h4>Isabel Allende</h4>
+                        <div class="meta-details">
+                            <span class="meta-badge">Chilean</span>
+                        </div>
+                        <p class="meta-text">Born: 1942-08-02</p>
+                        <p class="meta-desc">Chilean writer, one of the most widely read novelists in the world in Spanish.</p>
+                    </div>
+                </div>
+
+                <!-- Books Section -->
+                <div class="metadata-card">
+                    <h3 class="card-header">Books (bibo:Book)</h3>
+                    
+                    <div class="book-item">
+                        <h4>Cien años de soledad</h4>
+                        <div class="book-meta">
+                            <span class="meta-badge-small">1967</span>
+                            <span class="meta-badge-small">417 pages</span>
+                            <span class="meta-badge-small">5/5</span>
+                        </div>
+                        <p class="meta-author">by Gabriel García Márquez</p>
+                        <p class="meta-desc-sm">Emblematic novel of magical realism that narrates the history of the Buendía family over seven generations in the fictional town of Macondo.</p>
+                        <div class="genre-tags">
+                            <span class="genre-tag">Magical Realism</span>
+                            <span class="genre-tag">Latin American Narrative</span>
+                        </div>
+                    </div>
+
+                    <div class="book-item">
+                        <h4>El amor en los tiempos del cólera</h4>
+                        <div class="book-meta">
+                            <span class="meta-badge-small">1985</span>
+                            <span class="meta-badge-small">368 pages</span>
+                            <span class="meta-badge-small">5/5</span>
+                        </div>
+                        <p class="meta-author">by Gabriel García Márquez</p>
+                        <p class="meta-desc-sm">Love story that spans more than fifty years between Florentino Ariza and Fermina Daza.</p>
+                        <div class="genre-tags">
+                            <span class="genre-tag">Magical Realism</span>
+                            <span class="genre-tag">Latin American Narrative</span>
+                        </div>
+                    </div>
+
+                    <div class="book-item">
+                        <h4>Ficciones</h4>
+                        <div class="book-meta">
+                            <span class="meta-badge-small">1944</span>
+                            <span class="meta-badge-small">174 pages</span>
+                            <span class="meta-badge-small">5/5</span>
+                        </div>
+                        <p class="meta-author">by Jorge Luis Borges</p>
+                        <p class="meta-desc-sm">Collection of short stories including some of Borges' best-known works such as "The Garden of Forking Paths" and "The Library of Babel".</p>
+                        <div class="genre-tags">
+                            <span class="genre-tag">Fiction</span>
+                        </div>
+                    </div>
+
+                    <div class="book-item">
+                        <h4>La casa de los espíritus</h4>
+                        <div class="book-meta">
+                            <span class="meta-badge-small">1982</span>
+                            <span class="meta-badge-small">433 pages</span>
+                            <span class="meta-badge-small">4/5</span>
+                        </div>
+                        <p class="meta-author">by Isabel Allende</p>
+                        <p class="meta-desc-sm">Novel that narrates the history of the Trueba family through four generations, mixing the political with the magical.</p>
+                        <div class="genre-tags">
+                            <span class="genre-tag">Magical Realism</span>
+                            <span class="genre-tag">Latin American Narrative</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Genres Section -->
+                <div class="metadata-card">
+                    <h3 class="card-header">Literary Genres (schema:Genre)</h3>
+                    
+                    <div class="genre-item">
+                        <h4>Realismo Mágico</h4>
+                        <p class="meta-desc">Narrative genre that combines realistic elements with fantastic and magical elements presented as part of everyday reality.</p>
+                    </div>
+
+                    <div class="genre-item">
+                        <h4>Ficción</h4>
+                        <p class="meta-desc">Literary genre that narrates imaginary or invented events.</p>
+                    </div>
+
+                    <div class="genre-item">
+                        <h4>Narrativa Latinoamericana</h4>
+                        <p class="meta-desc">Set of literary works produced by Latin American authors.</p>
+                    </div>
+                </div>
+
+                <!-- RDF Triples Section -->
+                <div class="metadata-card full-width">
+                    <h3 class="card-header">RDF Triple Relations</h3>
+                    
+                    <div class="triples-grid">
+                        <div class="triple-item">
+                            <div class="triple-subject">gabriel-garcia-marquez</div>
+                            <div class="triple-predicate">foaf:made</div>
+                            <div class="triple-object">cien-anos-de-soledad</div>
+                        </div>
+                        <div class="triple-item">
+                            <div class="triple-subject">gabriel-garcia-marquez</div>
+                            <div class="triple-predicate">foaf:made</div>
+                            <div class="triple-object">el-amor-en-los-tiempos-del-colera</div>
+                        </div>
+                        <div class="triple-item">
+                            <div class="triple-subject">jorge-luis-borges</div>
+                            <div class="triple-predicate">foaf:made</div>
+                            <div class="triple-object">ficciones</div>
+                        </div>
+                        <div class="triple-item">
+                            <div class="triple-subject">isabel-allende</div>
+                            <div class="triple-predicate">foaf:made</div>
+                            <div class="triple-object">la-casa-de-los-espiritus</div>
+                        </div>
+                        <div class="triple-item">
+                            <div class="triple-subject">cien-anos-de-soledad</div>
+                            <div class="triple-predicate">schema:genre</div>
+                            <div class="triple-object">realismo-magico</div>
+                        </div>
+                        <div class="triple-item">
+                            <div class="triple-subject">cien-anos-de-soledad</div>
+                            <div class="triple-predicate">schema:relatedLink</div>
+                            <div class="triple-object">el-amor-en-los-tiempos-del-colera</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="main-footer">
+            <p>RDF Example - W3C Standard Implementation</p>
+            <p>Resource Description Framework for Semantic Web</p>
+        </footer>
+    </div>
+</body>
+</html>
