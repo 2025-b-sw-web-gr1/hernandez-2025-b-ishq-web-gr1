@@ -120,7 +120,6 @@ class TodoForm extends HTMLElement {
 
             <div class="form-container">
                 <div class="form-title">
-                    <span>➕</span>
                     NEW TASK
                 </div>
                 <form id="todo-form">
