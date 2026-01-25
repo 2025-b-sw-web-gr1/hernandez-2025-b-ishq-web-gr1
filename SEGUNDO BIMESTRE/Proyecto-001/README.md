@@ -16,6 +16,10 @@ API RESTful para gestión de equipos y jugadores de fútbol, desarrollada con Ne
 ### 1. Instalar dependencias del proyecto
 
 ```bash
+cd "SEGUNDO BIMESTRE/Proyecto-001"
+```
+
+```bash
 npm install
 ```
 
