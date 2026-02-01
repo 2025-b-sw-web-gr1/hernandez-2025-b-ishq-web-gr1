@@ -1,0 +1,20 @@
+meta {
+  name: Obtener 1 [Ingrediente]
+  type: http
+  seq: 6
+}
+
+get {
+  url: http://localhost:3000/ingredientes/{{idIngrediente}}
+  body: none
+  auth: inherit
+}
+
+vars:pre-request {
+  idIngrediente: 1
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

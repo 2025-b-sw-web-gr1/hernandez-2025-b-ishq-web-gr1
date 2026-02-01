@@ -1,0 +1,21 @@
+meta {
+  name: Borrar 1 [Ingrediente]
+  type: http
+  seq: 11
+}
+
+delete {
+  url: http://localhost:3000/recetas/{{idIngrediente}}
+  body: none
+  auth: inherit
+}
+
+vars:pre-request {
+  idReceta: 1
+  idIngrediente: 1
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

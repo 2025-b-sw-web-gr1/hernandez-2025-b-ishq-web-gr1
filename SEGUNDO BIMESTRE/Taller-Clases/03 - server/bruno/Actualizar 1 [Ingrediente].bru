@@ -1,0 +1,28 @@
+meta {
+  name: Actualizar 1 [Ingrediente]
+  type: http
+  seq: 10
+}
+
+patch {
+  url: http://localhost:3000/ingredientes/{{idIngrediente}}
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "nombre":"Nombre 2",
+    "descripcion":"Desc 1"
+  }
+}
+
+vars:pre-request {
+  idReceta: 1
+  idIngrediente: 1
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
