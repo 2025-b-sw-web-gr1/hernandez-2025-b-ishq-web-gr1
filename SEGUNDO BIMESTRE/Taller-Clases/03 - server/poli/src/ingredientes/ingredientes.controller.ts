@@ -9,16 +9,19 @@ import {
   Query,
   HttpException,
   HttpStatus,
+  UseGuards,
 } from '@nestjs/common';
 import { IngredientesService } from './ingrediente.service';
 import { Ingrediente } from './ingrediente.entity';
+import { AdminGuard } from '../guards/auth-admin.guard';
 
 @Controller('ingredientes')
 export class IngredientesController {
   constructor(private readonly ingredientesService: IngredientesService) {}
 
-  // Crear un ingrediente
+  // Crear un ingrediente (solo admin)
   @Post()
+  @UseGuards(AdminGuard)
   async crear(@Body() data: Partial<Ingrediente>) {
     try {
       const ingrediente = await this.ingredientesService.crear(data);
@@ -28,8 +31,9 @@ export class IngredientesController {
     }
   }
 
-  // Actualizar un ingrediente
+  // Actualizar un ingrediente (solo admin)
   @Patch(':id')
+  @UseGuards(AdminGuard)
   async actualizar(@Param('id') id: number, @Body() data: Partial<Ingrediente>) {
     try {
       const ingrediente = await this.ingredientesService.actualizar(id, data);
@@ -42,8 +46,9 @@ export class IngredientesController {
     }
   }
 
-  // Eliminar un ingrediente
+  // Eliminar un ingrediente (solo admin)
   @Delete(':id')
+  @UseGuards(AdminGuard)
   async eliminar(@Param('id') id: number) {
     try {
       await this.ingredientesService.eliminar(id);
@@ -53,8 +58,9 @@ export class IngredientesController {
     }
   }
 
-  // Obtener un ingrediente por ID
+  // Obtener un ingrediente por ID (protegido con admin)
   @Get(':id')
+  @UseGuards(AdminGuard)
   async obtenerUno(@Param('id') id: number) {
     const ingrediente = await this.ingredientesService.obtenerUno(id);
     if (!ingrediente) {
@@ -63,8 +69,9 @@ export class IngredientesController {
     return { statusCode: HttpStatus.OK, data: ingrediente };
   }
 
-  // Obtener muchos ingredientes con filtros
+  // Obtener muchos ingredientes con filtros (protegido con admin)
   @Get()
+  @UseGuards(AdminGuard)
   async obtenerMuchos(@Query() filtros: any) {
     const ingredientes = await this.ingredientesService.obtenerMuchos(filtros);
     return { statusCode: HttpStatus.OK, data: ingredientes };

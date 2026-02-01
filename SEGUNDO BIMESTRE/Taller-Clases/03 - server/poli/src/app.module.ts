@@ -6,6 +6,7 @@ import { Receta } from './recetas/receta.entity';
 import { Ingrediente } from './ingredientes/ingrediente.entity';
 import { RecetasModule } from './recetas/recetas.module';
 import { IngredientesModule } from './ingredientes/ingredientes.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [ // dentro de imports van los módulos que use nuestra aplicación
@@ -15,8 +16,9 @@ import { IngredientesModule } from './ingredientes/ingredientes.module';
       entities: [Receta, Ingrediente], 
       synchronize: true, // ⚠️ Solo para desarrollo 
       }), 
-    RecetasModule, 
+    RecetasModule,
     IngredientesModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
